@@ -10,9 +10,11 @@ public class Main {
 			
 			// Start program
 			
-			SongFileManager a = new SongFileManager();
+			Song s =  (new SongFileManager()).loadSong("musics/music.mp3");
+			s.play();
 			
-			a.loadSong("musics/music.mp3");
+			System.out.println("this will only print once music has stopped playing");
+			//s.close();
 			
 		}
 		catch (Exception e)

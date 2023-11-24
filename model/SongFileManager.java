@@ -1,9 +1,7 @@
 package model;
 
-import javazoom.jl.player.Player;
-
-import java.io.BufferedInputStream;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class SongFileManager {
 	
@@ -12,20 +10,19 @@ public class SongFileManager {
 		try {
 			
 			FileInputStream fis = new FileInputStream(path);
-	        BufferedInputStream bis = new BufferedInputStream(fis);
-	        Player player = new Player(bis);
-	        
-	        player.play();
 			
-			Song newSong = new Song();
+			Song newSong = new Song(fis);
 			
 			return newSong;
+		
 		}
-		catch(Exception e) {
+		catch(FileNotFoundException e) {
+			
+			System.out.println("File not found!");
 			
 			e.printStackTrace();
+			
 			return null;
 		}
 	}
-	
 }
