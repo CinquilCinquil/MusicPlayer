@@ -1,5 +1,7 @@
 package vision;
 
+import model.*;
+
 public class Main {
 	
     public static void main(String[] args) {
@@ -7,6 +9,10 @@ public class Main {
 		try {
 			
 			// Start program
+			
+			SongFileManager a = new SongFileManager();
+			
+			a.loadSong("musics/music.mp3");
 			
 		}
 		catch (Exception e)

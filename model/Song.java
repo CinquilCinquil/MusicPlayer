@@ -8,4 +8,8 @@ public class Song {
 	String name, artist;
 	File file;
 	
+	public Song() {
+		
+	}
+	
 }
