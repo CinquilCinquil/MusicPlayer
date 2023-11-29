@@ -6,11 +6,11 @@ public class UserVip extends User
 {	
 	ArrayList<Playlist> playlists;
 	
-	void addPlaylist(Playlist playlist) {
+	public void addPlaylist(Playlist playlist) {
 		playlists.add(playlist);
 	}
 	
-	void removePlaylist(int ind) {
+	public void removePlaylist(int ind) {
 		playlists.remove(ind);
 	}
 	

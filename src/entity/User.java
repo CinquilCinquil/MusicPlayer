@@ -7,19 +7,19 @@ public class User
 	String name;
 	ArrayList<Song> songs;
 	
-	void addSong(Song song) {
+	public void addSong(Song song) {
 		songs.add(song);
 	}
 	
-	void removeSong(int ind) {
+	public void removeSong(int ind) {
 		songs.remove(ind);
 	}
 	
-	String getName() {
+	public String getName() {
 		return name;
 	}
 	
-	void setName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	
