@@ -2,8 +2,8 @@ package entity;
 
 import java.util.ArrayList;
 
-public class UserVip extends User {
-	
+public class UserVip extends User
+{	
 	ArrayList<Playlist> playlists;
 	
 	void addPlaylist(Playlist playlist) {
