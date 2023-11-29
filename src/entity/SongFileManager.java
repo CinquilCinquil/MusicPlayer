@@ -1,11 +1,11 @@
-package model;
+package entity;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class SongFileManager {
 	
-	public Song loadSong(String path)
+	public static Song loadSong(String path)
 	{
 		try {
 			

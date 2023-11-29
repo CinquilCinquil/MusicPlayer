@@ -1,6 +1,6 @@
-package vision;
+package view;
 
-import model.*;
+import entity.*;
 
 public class Main {
 	
@@ -10,7 +10,7 @@ public class Main {
 			
 			// Start program
 			
-			Song s =  (new SongFileManager()).loadSong("musics/music.mp3");
+			Song s = SongFileManager.loadSong("musics/music.mp3");
 			s.play();
 			
 			System.out.println("this will only print once music has stopped playing");
