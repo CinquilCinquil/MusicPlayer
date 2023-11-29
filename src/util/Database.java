@@ -11,7 +11,7 @@ public class Database
     public Database()
     {
         try {
-             connection = DriverManager.getConnection("jdbc:sqlite:data/sample.db");
+             connection = DriverManager.getConnection("jdbc:sqlite:data\sample.db");
         }
         catch (SQLException e)
         {
