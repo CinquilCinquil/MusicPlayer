@@ -3,11 +3,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import util.Database;
+import external.MusicPlayerJFrame;
 
 public class Main
 {
     public static void main(String[] args)
     {
+    	MusicPlayerJFrame musicPlayer = new MusicPlayerJFrame();
+    	
         Database database = new Database();
 
         try (Statement statement = database.getConnection().createStatement())
