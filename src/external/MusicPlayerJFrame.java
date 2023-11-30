@@ -44,6 +44,9 @@ public class MusicPlayerJFrame extends JFrame implements ActionListener {
 		add(loopBtt);
 		add(chooseBtt);
 		
+		// Baldis
+		add(new JLabel(new ImageIcon("src/data/baldis.gif")));
+		
 		fileChooser = new JFileChooser();
 		fileChooser.setFileFilter(new FileNameExtensionFilter("WAV Files", "wav"));
 		
