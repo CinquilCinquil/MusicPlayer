@@ -1,14 +1,24 @@
 package external;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import javax.sound.sampled.*;
-import javax.swing.*;
-import javax.swing.filechooser.*;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 
-public class MusicPlayerJFrame extends JFrame implements ActionListener {
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
+public class MusicPlayer extends JPanel implements ActionListener {
+	
 	private static final long serialVersionUID = 1L;
 	
 	private JTextField filePathField;
@@ -21,11 +31,9 @@ public class MusicPlayerJFrame extends JFrame implements ActionListener {
 	private boolean isPaused = false;
 	private boolean isLooping = false;
 	
-	public MusicPlayerJFrame()
-	{
-		super("Music Player");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLayout(new FlowLayout());
+	public MusicPlayer() {
+		
+		setPreferredSize(new Dimension(600, 100));
 		
 		filePathField = new JTextField(20);
 		playBtt = new JButton("Play");
@@ -44,17 +52,11 @@ public class MusicPlayerJFrame extends JFrame implements ActionListener {
 		add(loopBtt);
 		add(chooseBtt);
 		
-		// Baldis
-		add(new JLabel(new ImageIcon("src/data/baldis.gif")));
-		
 		fileChooser = new JFileChooser();
 		fileChooser.setFileFilter(new FileNameExtensionFilter("WAV Files", "wav"));
 		
-		setSize(1000, 500);
-		setLocationRelativeTo(null);
-		setVisible(true);
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
@@ -160,4 +162,5 @@ public class MusicPlayerJFrame extends JFrame implements ActionListener {
 			}
 		}
 	}
+
 }

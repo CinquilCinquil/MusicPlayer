@@ -112,5 +112,70 @@ public class UserRepository implements IRepository<User>
         catch (SQLException e) {
             e.printStackTrace();
         }
-    }  
+    } 
+    
+    public boolean isVip(int id) {
+    	String query = "SELECT vip FROM users WHERE id = ?";
+    	
+    	try (
+                Connection connection = Database.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)
+        ){
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            
+            if (resultSet.next()) {
+                return resultSet.getBoolean("vip");
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+    
+    public int getUserId(String name) {
+    	String query = "SELECT id FROM users WHERE name = ?";
+
+        try (
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)
+        ){
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+            
+            if (resultSet.next()) {
+                return resultSet.getInt("id");
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
+    
+    public String getUserPassword(int id) {
+    	
+    	String query = "SELECT password FROM users WHERE id = ?";
+
+        try (
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)
+        ){
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            
+            if (resultSet.next()) {
+                return resultSet.getString("password");
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    	
+    }
 }

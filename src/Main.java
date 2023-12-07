@@ -3,13 +3,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import util.Database;
-import external.MusicPlayerJFrame;
+import external.LoginScreen;
+import external.PlayerWindow;
 
 public class Main
 {
     public static void main(String[] args)
     {
-    	MusicPlayerJFrame musicPlayer = new MusicPlayerJFrame();
+    	LoginScreen l = new LoginScreen();
     	
         Database database = new Database();
 
@@ -23,7 +24,7 @@ public class Main
             statement.executeUpdate("INSERT INTO terminalroot VALUES (2, 'James Gosling')");
             
             // printing table
-            ResultSet rs = statement.executeQuery("SELECT * FROM terminalroot");
+            ResultSet rs = statement.executeQuery("SELECT * FROM users");
             while (rs.next()) {  
         		System.out.println(rs.getInt("id") +  "\t" +   
                 rs.getString("name"));
