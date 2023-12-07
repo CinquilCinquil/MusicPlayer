@@ -2,6 +2,7 @@ package entity;
 
 import java.util.ArrayList;
 
+import repository.PlaylistRepository;
 import repository.UserRepository;
 
 public class Playlist
@@ -42,9 +43,8 @@ public class Playlist
 	}
 	
 	public void updateSongs() {
-		UserRepository userRepository = new UserRepository();
-		songs = userRepository.playlistGetSongs(id);
-		System.out.println(songs);
+		PlaylistRepository playlistRepository = new PlaylistRepository();
+		songs = playlistRepository.playlistGetSongs(id);
 	}
 	
 }

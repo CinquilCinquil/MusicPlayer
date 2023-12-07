@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
+import repository.SongRepository;
 import repository.UserRepository;
 
 public class AddContent extends JButton implements ActionListener {
@@ -17,8 +18,10 @@ public class AddContent extends JButton implements ActionListener {
 	private JFileChooser fileChooser;
 	private int userId;
 	private UserRepository userRepository;
+	private SongRepository songRepository;
 	private boolean addDir;
-
+	private SongList songList;
+	
 	public AddContent(int userId, boolean addDir) {
 		setText(addDir ? "Add Dir" : "Add File");
 
@@ -29,6 +32,7 @@ public class AddContent extends JButton implements ActionListener {
 		this.userId = userId;
 		
 		userRepository = new UserRepository();
+		songRepository = new SongRepository();
 		fileChooser = new JFileChooser();
 	}
 	
@@ -37,6 +41,7 @@ public class AddContent extends JButton implements ActionListener {
 		
 		if (e.getSource() == this)
 		{
+			songList.updateFiles();
 			if (addDir) {
 				chooseDir();
 			}
@@ -80,7 +85,10 @@ public class AddContent extends JButton implements ActionListener {
 	}
 	
 	private void addFile(String filepath) {
-		userRepository.addUserSong(userId, filepath);
+		songRepository.addUserSong(userId, filepath);
 	}
 
+	public void setSongList(SongList songList) {
+		this.songList = songList;
+	}
 }

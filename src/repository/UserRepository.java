@@ -245,60 +245,6 @@ public class UserRepository implements IRepository<User>
         return null;
     	
     }
-    
-    public ArrayList<Song> playlistGetSongs(int playlistId) {
-    	
-    	String query = "SELECT * FROM playlist_song WHERE playlist_id = ?";
-
-        try (
-            Connection connection = Database.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query)
-        ){
-            statement.setInt(1, playlistId);
-            ResultSet resultSet = statement.executeQuery();
-      
-        	ArrayList<Song> songList = new ArrayList<Song>();
-        	
-        	while (resultSet.next()) {
-        		songList.add(getSongById(resultSet.getInt("song_id")));
-        	}
-        	
-        	return songList;
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    	
-    }
-    
-    public Song getSongById(int songId) {
-    	
-    	String query = "SELECT * FROM songs WHERE id = ?";
-
-        try (
-            Connection connection = Database.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query)
-        ){
-            statement.setInt(1, songId);
-            ResultSet resultSet = statement.executeQuery();
-            
-            if (resultSet.next()) {
-            	return new Song(resultSet.getInt("id"),
-            			resultSet.getString("name"),
-            			resultSet.getString("artist"),
-            			resultSet.getString("path")
-            	);
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    	
-    }
 
     public ArrayList<String> getUserDirectories(int userId) {
     	
@@ -335,24 +281,6 @@ public class UserRepository implements IRepository<User>
             PreparedStatement statement = connection.prepareStatement(query)
         ){
             statement.setInt(1, userId);
-            statement.setString(2, dir);
-            statement.executeUpdate();
-        } 
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void addUserSong(int userId, String dir) {
-    	
-    	String query = "INSERT INTO songs (user_id, name, filepath) VALUES (?, ?, ?)";
-
-        try (
-            Connection connection = Database.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query)
-        ){
-            statement.setInt(1, userId);
-            statement.setString(2, (new File(dir)).getName());
             statement.setString(2, dir);
             statement.executeUpdate();
         } 

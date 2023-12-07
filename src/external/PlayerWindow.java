@@ -7,6 +7,8 @@ import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.filechooser.*;
 
+import repository.UserRepository;
+
 public class PlayerWindow extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -36,31 +38,36 @@ public class PlayerWindow extends JFrame implements ActionListener {
 		c.weightx = 0.32;
 		c.gridx = 0;
 		c.gridy = 0;
-		add(new AddContent(userId, true), c);
+		AddContent addDir = new AddContent(userId, true);
+		add(addDir, c);
 
 		// ???
 		c.weightx = 0.32;
 		c.gridx = 1;
 		c.gridy = 0;
-		add(new AddContent(userId, false), c);
+		AddContent addFile = new AddContent(userId, false);
+		add(addFile, c);
 		
 		// ???
 		c.weightx = 0.32;
 		c.gridx = 2;
 		c.gridy = 0;
-		add(new JButton("-"), c);
+		add(new JLabel("User: " + (new UserRepository()).getOne(userId).getName()), c);
 
 		// Song List
-		c.ipady = 260;
 		c.weightx = 0.32;
 		c.ipady = 260;
 		c.gridx = 0;
 		c.gridy = 1;
-		add((new SongList(userId, musicPlayer)).getScroll(), c);
+		SongList songList = new SongList(userId, musicPlayer);
+		add(songList.getScroll(), c);
+		
+		addDir.setSongList(songList);
+		addFile.setSongList(songList);
 		
 		if (isVip) {
 			// Song List
-			c.ipady = 308; //276;
+			c.ipady = 276; //276; 308
 			c.weightx = 0.32;
 			c.gridx = 1;
 			c.gridy = 1;
@@ -68,7 +75,7 @@ public class PlayerWindow extends JFrame implements ActionListener {
 			add(playlistList.getScroll(), c);
 			
 			// PlaylistSongList
-			c.ipady = 325; //292
+			c.ipady = 292; //292 325
 			c.ipadx = 68;
 			c.weightx = 0.32;
 			c.gridx = 2;
