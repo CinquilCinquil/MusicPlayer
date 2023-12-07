@@ -87,7 +87,7 @@ public class LoginScreen extends JFrame implements ActionListener {
 			int passComp = userRepository.getUserPassword(id).compareTo(String.valueOf(passwordField.getPassword()));
 			if (passComp == 0)
 			{
-				new PlayerWindow(this, userRepository.isVip(id));
+				new PlayerWindow(this, id, userRepository.isVip(id));
 			}
 			else {
 				setWarning("Invalid password!");

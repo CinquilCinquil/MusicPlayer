@@ -1,5 +1,7 @@
 package repository;
 
+import entity.Playlist;
+import entity.Song;
 import entity.User;
 import util.Database;
 
@@ -169,6 +171,124 @@ public class UserRepository implements IRepository<User>
             
             if (resultSet.next()) {
                 return resultSet.getString("password");
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    	
+    }
+    
+    public ArrayList<Song> getUserSongs(int userId) {
+    	
+    	String query = "SELECT * FROM songs WHERE user_id = ?";
+
+        try (
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)
+        ){
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+      
+        	ArrayList<Song> songList = new ArrayList<Song>();
+        	
+        	while (resultSet.next()) {  
+            	
+        		songList.add(
+        				new Song(resultSet.getInt("id"),
+        						resultSet.getString("name"),
+        						resultSet.getString("artist"),
+        						resultSet.getString("path"))
+        		);
+        	}
+        	
+        	return songList;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    	
+    }
+    
+    public ArrayList<Playlist> getUserPlaylists(int userId) {
+    	
+    	String query = "SELECT * FROM playlists WHERE user_id = ?";
+
+        try (
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)
+        ){
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+      
+        	ArrayList<Playlist> songList = new ArrayList<Playlist>();
+        	
+        	while (resultSet.next()) {  
+            	
+        		songList.add(
+        				new Playlist(resultSet.getInt("id"),
+        						resultSet.getString("name"))
+        		);
+        	}
+        	
+        	return songList;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    	
+    }
+    
+    public ArrayList<Song> playlistGetSongs(int playlistId) {
+    	
+    	String query = "SELECT * FROM playlist_song WHERE playlist_id = ?";
+
+        try (
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)
+        ){
+            statement.setInt(1, playlistId);
+            ResultSet resultSet = statement.executeQuery();
+      
+        	ArrayList<Song> songList = new ArrayList<Song>();
+        	
+        	while (resultSet.next()) {
+        		songList.add(getSongById(resultSet.getInt("song_id")));
+        	}
+        	
+        	return songList;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    	
+    }
+    
+    public Song getSongById(int songId) {
+    	
+    	String query = "SELECT * FROM songs WHERE id = ?";
+
+        try (
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)
+        ){
+            statement.setInt(1, songId);
+            ResultSet resultSet = statement.executeQuery();
+            
+            if (resultSet.next()) {
+            	return new Song(resultSet.getInt("id"),
+            			resultSet.getString("name"),
+            			resultSet.getString("artist"),
+            			resultSet.getString("path")
+            	);
             }
         }
         catch (SQLException e) {

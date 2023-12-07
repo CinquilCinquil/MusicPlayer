@@ -33,7 +33,7 @@ public class MusicPlayer extends JPanel implements ActionListener {
 	
 	public MusicPlayer() {
 		
-		setPreferredSize(new Dimension(600, 100));
+		//setPreferredSize(new Dimension(600, 100));
 		
 		filePathField = new JTextField(20);
 		playBtt = new JButton("Play");
@@ -122,7 +122,7 @@ public class MusicPlayer extends JPanel implements ActionListener {
 					clip.loop(Clip.LOOP_CONTINUOUSLY);
 				}
 				
-				pauseBtt.setText("Pause");
+				pauseBtt.setText("Pause⠀");
 			}
 		}
 		
@@ -161,6 +161,10 @@ public class MusicPlayer extends JPanel implements ActionListener {
 				clip.loop(0); // loop 0 times (only playing it once)
 			}
 		}
+	}
+	
+	public void setSongPath(String path) {
+		filePathField.setText(path);
 	}
 
 }

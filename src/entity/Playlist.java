@@ -2,6 +2,8 @@ package entity;
 
 import java.util.ArrayList;
 
+import repository.UserRepository;
+
 public class Playlist
 {
 	int id;
@@ -11,6 +13,8 @@ public class Playlist
 	public Playlist(int id, String name) {
 		this.id = id;
 		this.name = name;
+		
+		updateSongs();
 	}
 
 	public int getId() {
@@ -31,6 +35,15 @@ public class Playlist
 	
 	public Song getSong(int ind) {
 		return songs.get(ind);
+	}
+	
+	public ArrayList<Song> getSongs() {
+		return songs;
+	}
+	
+	public void updateSongs() {
+		UserRepository userRepository = new UserRepository();
+		songs = userRepository.playlistGetSongs(id);
 	}
 	
 }
