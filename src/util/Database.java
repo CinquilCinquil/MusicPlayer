@@ -6,22 +6,17 @@ import java.sql.SQLException;
 
 public class Database
 {
-    Connection connection;
+    private static final String connectionUrl = "jdbc:sqlite:./data/sample.db";
 
-    public Database()
+    public static Connection getConnection()
     {
         try {
-             connection = DriverManager.getConnection("jdbc:sqlite:data\sample.db");
+            return DriverManager.getConnection(connectionUrl);
         }
         catch (SQLException e)
         {
             e.printStackTrace();
-            connection = null;
+            return null;
         }
-    }
-
-    public Connection getConnection()
-    {
-        return connection;
     }
 }
