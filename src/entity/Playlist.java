@@ -4,8 +4,18 @@ import java.util.ArrayList;
 
 public class Playlist
 {
+	int id;
 	String name;
 	ArrayList<Song> songs;
+
+	public Playlist(int id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+
+	public int getId() {
+		return id;
+	}
 	
 	public String getName() {
 		return name;
