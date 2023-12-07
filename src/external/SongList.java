@@ -30,6 +30,7 @@ import repository.UserRepository;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.nio.file.Files;
 
 public class SongList extends JPanel implements ActionListener {
 	
@@ -40,6 +41,7 @@ public class SongList extends JPanel implements ActionListener {
 	private MusicPlayer musicPlayer;
 	private PlaylistList playlistList;
 	private JLabel title;
+	private int userId;
 	
 	public class SongItem extends JLabel implements MouseListener {
 		
@@ -95,15 +97,13 @@ public class SongList extends JPanel implements ActionListener {
 		
 		add(title);
 		
+		this.userId = userId;
+		
 		this.musicPlayer = musicPlayer;
 		
 		userRepository = new UserRepository();
 		
-		songList = toSongItem(userRepository.getUserSongs(userId));
-		
-		for (SongItem song : songList) {
-			add(song);
-		}
+		updateFiles();
 		
 	}
 	
@@ -149,6 +149,7 @@ public class SongList extends JPanel implements ActionListener {
 			title.setText("<html><b><span style=\"color:#000000;font-size:14px;\">" + 
 					p.getName() + "</b></html>");
 			
+			System.out.println(playlistList.getCurrentPlaylist().getSongs());
 			
 			songList = toSongItem(playlistList.getCurrentPlaylist().getSongs());
 			
@@ -157,6 +158,48 @@ public class SongList extends JPanel implements ActionListener {
 			}	
 		
 		}
+	}
+	
+	public void updateFiles() {
+		
+		// Adding user songs
+		
+		songList = toSongItem(userRepository.getUserSongs(userId));
+		
+		for (SongItem song : songList) {
+			add(song);
+		}
+		
+		// Adding songs in directories
+		ArrayList<String> dirs = userRepository.getUserDirectories(userId);
+		
+		for (String dir : dirs) {
+			
+			File currentDir = new File(dir);
+			
+			for (File file : currentDir.listFiles()) {
+				
+				if (getExtension(file).compareTo("wav") == 0) {
+					add(new SongItem(
+							new Song(userId, file.getName(), "?", file.getPath())
+					));
+				}
+			}
+			
+		}
+		
+	}
+	
+	private String getExtension(File file) {
+		String fileName = file.toString();
+
+	    int index = fileName.lastIndexOf('.');
+	    if(index > 0) {
+	      String extension = fileName.substring(index + 1);
+	      return extension;
+	    }
+	    
+	    return null;
 	}
 
 }

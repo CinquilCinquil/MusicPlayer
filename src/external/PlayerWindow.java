@@ -36,13 +36,13 @@ public class PlayerWindow extends JFrame implements ActionListener {
 		c.weightx = 0.32;
 		c.gridx = 0;
 		c.gridy = 0;
-		add(new JButton("Add Dir"), c);
+		add(new AddContent(userId, true), c);
 
 		// ???
 		c.weightx = 0.32;
 		c.gridx = 1;
 		c.gridy = 0;
-		add(new JButton("-"), c);
+		add(new AddContent(userId, false), c);
 		
 		// ???
 		c.weightx = 0.32;
@@ -60,7 +60,7 @@ public class PlayerWindow extends JFrame implements ActionListener {
 		
 		if (isVip) {
 			// Song List
-			c.ipady = 276;
+			c.ipady = 308; //276;
 			c.weightx = 0.32;
 			c.gridx = 1;
 			c.gridy = 1;
@@ -68,7 +68,7 @@ public class PlayerWindow extends JFrame implements ActionListener {
 			add(playlistList.getScroll(), c);
 			
 			// PlaylistSongList
-			c.ipady = 292;
+			c.ipady = 325; //292
 			c.ipadx = 68;
 			c.weightx = 0.32;
 			c.gridx = 2;

@@ -5,6 +5,7 @@ import entity.Song;
 import entity.User;
 import util.Database;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -297,5 +298,66 @@ public class UserRepository implements IRepository<User>
 
         return null;
     	
+    }
+
+    public ArrayList<String> getUserDirectories(int userId) {
+    	
+    	String query = "SELECT * FROM directories WHERE user_id = ?";
+
+        try (
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)
+        ){
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+      
+        	ArrayList<String> directoriesList = new ArrayList<String>();
+        	
+        	while (resultSet.next()) {  
+        		directoriesList.add(resultSet.getString("filepath"));
+        	}
+        	
+        	return directoriesList;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    	
+    }
+
+    public void addUserDir(int userId, String dir) {	
+    	String query = "INSERT INTO directories (user_id, filepath) VALUES (?, ?)";
+
+        try (
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)
+        ){
+            statement.setInt(1, userId);
+            statement.setString(2, dir);
+            statement.executeUpdate();
+        } 
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addUserSong(int userId, String dir) {
+    	
+    	String query = "INSERT INTO songs (user_id, name, filepath) VALUES (?, ?, ?)";
+
+        try (
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)
+        ){
+            statement.setInt(1, userId);
+            statement.setString(2, (new File(dir)).getName());
+            statement.setString(2, dir);
+            statement.executeUpdate();
+        } 
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

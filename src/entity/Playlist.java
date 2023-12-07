@@ -44,6 +44,7 @@ public class Playlist
 	public void updateSongs() {
 		UserRepository userRepository = new UserRepository();
 		songs = userRepository.playlistGetSongs(id);
+		System.out.println(songs);
 	}
 	
 }
