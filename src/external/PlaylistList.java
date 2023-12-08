@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+import control.ContentController;
 import entity.Playlist;
 import repository.UserRepository;
 
@@ -23,7 +24,7 @@ public class PlaylistList extends JPanel implements ActionListener {
 	
 	private PlayerWindow frame;
 	private ArrayList<PlaylistItem> playlistList;
-	private UserRepository userRepository;
+	private ContentController contentController;
 	private Playlist currentPlaylist;
 	private SongList songList;
 	
@@ -86,7 +87,7 @@ public class PlaylistList extends JPanel implements ActionListener {
 		
 		this.songList = songList;
 		
-		userRepository = new UserRepository();
+		contentController = new ContentController();
 		
 		update();
 		
@@ -112,7 +113,7 @@ public class PlaylistList extends JPanel implements ActionListener {
 		
 		clearPanelList();
 		
-		playlistList = toPlaylistItem(userRepository.getUserPlaylists(frame.userId));
+		playlistList = toPlaylistItem(contentController.getUserPlaylists(frame.userId));
 		
 		for (PlaylistItem playlist : playlistList) {
 			add(playlist);
