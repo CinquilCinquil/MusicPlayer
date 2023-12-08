@@ -142,10 +142,7 @@ public class PlaylistList extends JPanel {
 		
 		for (PlaylistItem playlist : playlistList) {
 			add(playlist);
-			System.out.println("AA");
 		}
-		
-		System.out.println("--");
 		
 		revalidate();
 	}
