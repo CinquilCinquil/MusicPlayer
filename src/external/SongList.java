@@ -1,11 +1,8 @@
 package external;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -13,18 +10,19 @@ import javax.swing.ScrollPaneConstants;
 import entity.Playlist;
 import entity.Song;
 import repository.UserRepository;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 
-public class SongList extends JPanel implements ActionListener {
+public class SongList extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	
+	private PlayerWindow frame;
 	private ArrayList<SongItem> songList;
 	private UserRepository userRepository;
 	private MusicPlayer musicPlayer;
-	private PlaylistList playlistList;
 	private JLabel title;
 	private int userId;
 	
@@ -53,6 +51,8 @@ public class SongList extends JPanel implements ActionListener {
 	    public void mouseClicked(MouseEvent e) {
 			File selectedFile = new File(song.getFilepath());
 			musicPlayer.setSong(selectedFile.getAbsolutePath());
+			frame.currentSongName = song.getName();
+			frame.currentSong.update();
 	    }
 	    @Override
 	    public void mousePressed(MouseEvent e) {
@@ -62,9 +62,11 @@ public class SongList extends JPanel implements ActionListener {
 	    }
 	    @Override
 	    public void mouseEntered(MouseEvent e) {
+	    	setText("<html><b><span style=\"color:#FFFFFF;font-size:9.5px;\">" + song.getName() + "</b></html>");
 	    }
 	    @Override
 	    public void mouseExited(MouseEvent e) {
+	    	setText("<html><b><span style=\"color:#000000;font-size:9.5px;\">" + song.getName() + "</b></html>");
 	    }
 	}
 	
@@ -76,7 +78,7 @@ public class SongList extends JPanel implements ActionListener {
 	}
 	
 	// Normal song list
-	public SongList(int userId, MusicPlayer musicPlayer) {
+	public SongList(PlayerWindow frame) {
 		setBackground(new Color(141, 193, 163));
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS) );
 		
@@ -84,9 +86,11 @@ public class SongList extends JPanel implements ActionListener {
 		
 		add(title);
 		
-		this.userId = userId;
+		this.frame = frame;
 		
-		this.musicPlayer = musicPlayer;
+		this.userId = frame.userId;
+		
+		this.musicPlayer = frame.musicPlayer;
 		
 		userRepository = new UserRepository();
 		
@@ -95,7 +99,7 @@ public class SongList extends JPanel implements ActionListener {
 	}
 	
 	// Song list for a certain playlist
-	public SongList(PlaylistList playlistList, MusicPlayer musicPlayer) {
+	public SongList(PlayerWindow frame, boolean playlistSongList) {
 		setBackground(new Color(219, 81, 101));
 		setLayout( new BoxLayout(this, BoxLayout.PAGE_AXIS) );
 
@@ -103,16 +107,7 @@ public class SongList extends JPanel implements ActionListener {
 		
 		add(title);
 		
-		this.musicPlayer = musicPlayer;
-		
-		this.playlistList = playlistList;
-		
-		updateCurrentPlaylist();
-	}
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-
+		this.musicPlayer = frame.musicPlayer;
 	}
 	
 	public ArrayList<SongItem> toSongItem(ArrayList<Song> list) {
@@ -126,16 +121,14 @@ public class SongList extends JPanel implements ActionListener {
 		return newList;
 	}
 	
-	public void updateCurrentPlaylist() {
-		
-		Playlist p = playlistList.getCurrentPlaylist();
+	public void updateCurrentPlaylist(Playlist p) {
 		
 		if (p != null) {
 		
 			title.setText("<html><b><span style=\"color:#000000;font-size:14px;\">" + 
 					p.getName() + "</b></html>");
 			
-			songList = toSongItem(playlistList.getCurrentPlaylist().getSongs());
+			songList = toSongItem(p.getSongs());
 			
 			for (SongItem song : songList) {
 				add(song);

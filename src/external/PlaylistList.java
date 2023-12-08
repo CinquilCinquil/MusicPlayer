@@ -20,10 +20,11 @@ public class PlaylistList extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	
+	private PlayerWindow frame;
 	private ArrayList<PlaylistItem> playlistList;
 	private UserRepository userRepository;
 	private Playlist currentPlaylist;
-	private SongList songList; 
+	private SongList songList;
 	
 	public class PlaylistItem extends JLabel implements MouseListener {
 		
@@ -49,7 +50,7 @@ public class PlaylistList extends JPanel implements ActionListener {
 		@Override
 	    public void mouseClicked(MouseEvent e) {
 			currentPlaylist = playlist;
-			songList.updateCurrentPlaylist();
+			songList.updateCurrentPlaylist(currentPlaylist);
 	    }
 	    @Override
 	    public void mousePressed(MouseEvent e) {
@@ -59,9 +60,11 @@ public class PlaylistList extends JPanel implements ActionListener {
 	    }
 	    @Override
 	    public void mouseEntered(MouseEvent e) {
+	    	setText("<html><b><span style=\"color:#FFFFFF;font-size:9.5px;\">" + playlist.getName() + "</b></html>");
 	    }
 	    @Override
 	    public void mouseExited(MouseEvent e) {
+	    	setText("<html><b><span style=\"color:#000000;font-size:9.5px;\">" + playlist.getName() + "</b></html>");
 	    }
 	}
 	
@@ -72,19 +75,19 @@ public class PlaylistList extends JPanel implements ActionListener {
 		return j;
 	}
 	
-	public PlaylistList(int userId) {
+	public PlaylistList(PlayerWindow frame, SongList songList) {
 		setBackground(new Color(141, 100, 163));
 		setLayout( new BoxLayout(this, BoxLayout.PAGE_AXIS) );
 
 		add(new JLabel("<html><b><span style=\"color:#000000;font-size:14px;\">" + " Playlists" + "</b></html>"));	
 		
+		this.frame = frame;
+		
+		this.songList = songList;
+		
 		userRepository = new UserRepository();
 		
-		playlistList = toPlaylistItem(userRepository.getUserPlaylists(userId));
-		
-		for (PlaylistItem playlist : playlistList) {
-			add(playlist);
-		}
+		updatePlaylistList();
 		
 	}
 	
@@ -104,12 +107,16 @@ public class PlaylistList extends JPanel implements ActionListener {
 		return newList;
 	}
 	
-	public Playlist getCurrentPlaylist() {
-		return currentPlaylist;
+	public void updatePlaylistList() {
+		playlistList = toPlaylistItem(userRepository.getUserPlaylists(frame.userId));
+		
+		for (PlaylistItem playlist : playlistList) {
+			add(playlist);
+		}
 	}
 	
-	public void setSongList(SongList songList) {
-		this.songList = songList;
+	public Playlist getCurrentPlaylist() {
+		return currentPlaylist;
 	}
 	
 }

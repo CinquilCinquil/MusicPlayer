@@ -8,6 +8,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import util.MusicPlayerState;
+
 public class MusicPlayerService {
 	
 	private Clip clip;

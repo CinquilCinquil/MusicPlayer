@@ -7,8 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import control.MusicPlayerController;
-import service.MusicPlayerService;
-import service.MusicPlayerState;
+import util.MusicPlayerState;
 
 public class MusicPlayer extends JPanel implements ActionListener {
 	

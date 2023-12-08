@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+
 import repository.SongRepository;
 import repository.UserRepository;
 
@@ -19,14 +21,16 @@ public class AddContent extends JButton implements ActionListener {
 	private boolean addDir;
 	private SongList songList;
 	
-	public AddContent(int userId, boolean addDir) {
+	public AddContent(PlayerWindow frame, SongList songList, boolean addDir) {
 		setText(addDir ? "Add Dir" : "Add File");
 
 		addActionListener(this);
 		
 		this.addDir = addDir;
 		
-		this.userId = userId;
+		this.userId = frame.userId;
+		
+		this.songList = songList;
 		
 		userRepository = new UserRepository();
 		songRepository = new SongRepository();

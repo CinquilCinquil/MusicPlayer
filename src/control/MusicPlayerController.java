@@ -2,7 +2,7 @@ package control;
 
 import javax.swing.JPanel;
 import service.MusicPlayerService;
-import service.MusicPlayerState;
+import util.MusicPlayerState;
 
 public class MusicPlayerController {
 	
