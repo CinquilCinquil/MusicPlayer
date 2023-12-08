@@ -23,5 +23,9 @@ public class ContentService {
 	public ArrayList<Playlist> getUserPlaylists(int userId) {
 		return userRepository.getUserPlaylists(userId);
 	}
+	
+	public void updatePlaylist(Playlist playlist) {
+		playlistRepository.update(playlist);
+	}
 
 }

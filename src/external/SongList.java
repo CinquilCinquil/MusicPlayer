@@ -1,6 +1,7 @@
 package external;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -9,6 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import entity.Playlist;
 import entity.Song;
+import external.PlaylistList.PlaylistItem;
 import repository.UserRepository;
 
 import java.awt.event.MouseEvent;
@@ -126,8 +128,12 @@ public class SongList extends JPanel {
 	
 	public void updateCurrentPlaylist(Playlist p) {
 		
+		clearPanelList();
+		
 		if (p != null) {
 		
+			
+			
 			title.setText("<html><b><span style=\"color:#000000;font-size:14px;\">" + 
 					p.getName() + "</b></html>");
 			
@@ -139,10 +145,20 @@ public class SongList extends JPanel {
 		
 		}
 		
+		/*
+		for (Component c : getComponents())
+		{
+			System.out.println("a");
+		}
+		System.out.println("-");
+		*/
+		
 		revalidate();
 	}
 	
 	public void updateFiles() {
+		
+		clearPanelList();
 		
 		// Adding user songs
 		
@@ -184,6 +200,14 @@ public class SongList extends JPanel {
 	    }
 	    
 	    return null;
+	}
+	
+	private void clearPanelList() {
+		for (Component p : getComponents()) {
+			if (p instanceof SongItem) {
+				remove(p);
+			}
+		}
 	}
 
 }

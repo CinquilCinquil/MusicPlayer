@@ -20,5 +20,9 @@ public class ContentController {
 	public ArrayList<Playlist> getUserPlaylists(int userId) {
 		return service.getUserPlaylists(userId);
 	}
+	
+	public void updatePlaylist(Playlist playlist) {
+		service.updatePlaylist(playlist);
+	}
 
 }

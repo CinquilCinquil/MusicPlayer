@@ -29,9 +29,9 @@ public class PlayerWindow extends JFrame {
 	public PlayerWindow(LoginScreen windowToClose, int userId, boolean isVip)
 	{
 		super("Music Player");
-		dispatchEvent(new WindowEvent(windowToClose, WindowEvent.WINDOW_CLOSING));
+		windowToClose.dispose();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setResizable(true);
+		setResizable(false);
 		getContentPane().setBackground(Color.decode("#59C17F"));
 		setLayout(new GridBagLayout());
 		

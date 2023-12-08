@@ -110,8 +110,21 @@ public class PlaylistRepository implements IRepository<Playlist> {
 	}
 
 	public void update(Playlist entity) {
-		// TODO Auto-generated method stub
 		
+		 String query = "UPDATE playlists SET name = ? WHERE id = ?";
+
+        try (
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)
+        ){
+            
+            statement.setString(1, entity.getName());
+            statement.setInt(2, entity.getId());
+            statement.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
 	}
 
 	public void delete(int id) {

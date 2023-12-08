@@ -2,23 +2,20 @@ package external;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-
+import javax.swing.SwingUtilities;
 import control.ContentController;
 import entity.Playlist;
-import repository.UserRepository;
+import util.IAlterableName;
 
-public class PlaylistList extends JPanel implements ActionListener {
+public class PlaylistList extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -28,7 +25,7 @@ public class PlaylistList extends JPanel implements ActionListener {
 	private Playlist currentPlaylist;
 	private SongList songList;
 	
-	public class PlaylistItem extends JLabel implements MouseListener {
+	public class PlaylistItem extends JLabel implements MouseListener, IAlterableName {
 		
 		private static final long serialVersionUID = 1L;
 		
@@ -40,19 +37,40 @@ public class PlaylistList extends JPanel implements ActionListener {
 		}
 		
 		public PlaylistItem(Playlist playlist) {
-			super("<html><b><span style=\"color:#000000;font-size:9.5px;\">" + playlist.getName() + "</b></html>");
 			addMouseListener(this);
 			this.playlist = playlist;
+			updateName();
 		}
 		
 		public Playlist getPlaylist() {
 			return playlist;
 		}
 		
+		public void fromWindowAlterName(String newName) {
+			if (playlist != null)
+			{
+				playlist.setName(newName);
+				updateName();
+				contentController.updatePlaylist(playlist);
+			}
+		}
+		
+		public void updateName() {
+			setText("<html><b><span style=\"color:#000000;font-size:9.5px;\">" + playlist.getName() + "</b></html>");
+		}
+		
 		@Override
 	    public void mouseClicked(MouseEvent e) {
-			currentPlaylist = playlist;
-			songList.updateCurrentPlaylist(currentPlaylist);
+			
+			if (SwingUtilities.isLeftMouseButton(e))
+			{
+				currentPlaylist = playlist;
+				songList.updateCurrentPlaylist(currentPlaylist);
+			}
+			else {
+				new AlterNameWindow(this, playlist.getName());
+			}
+			
 	    }
 	    @Override
 	    public void mousePressed(MouseEvent e) {
@@ -92,12 +110,7 @@ public class PlaylistList extends JPanel implements ActionListener {
 		update();
 		
 	}
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
 
-	}
-	
 	public ArrayList<PlaylistItem> toPlaylistItem(ArrayList<Playlist> list) {
 		
 		ArrayList<PlaylistItem> newList = new ArrayList<PlaylistItem>();
