@@ -135,8 +135,6 @@ public class SongList extends JPanel implements ActionListener {
 			title.setText("<html><b><span style=\"color:#000000;font-size:14px;\">" + 
 					p.getName() + "</b></html>");
 			
-			System.out.println(playlistList.getCurrentPlaylist().getSongs());
-			
 			songList = toSongItem(playlistList.getCurrentPlaylist().getSongs());
 			
 			for (SongItem song : songList) {

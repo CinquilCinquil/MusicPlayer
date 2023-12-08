@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import control.MusicPlayerController;
 import service.MusicPlayerService;
 import service.MusicPlayerState;
 
@@ -17,11 +19,11 @@ public class MusicPlayer extends JPanel implements ActionListener {
 	private JButton pauseBtt;
 	private JButton loopBtt;
 	private JButton chooseBtt;
-	private MusicPlayerService musicPlayerService;
+	private MusicPlayerController musicPlayerController;
 	
 	public MusicPlayer() {
 		
-		musicPlayerService = new MusicPlayerService();
+		musicPlayerController = new MusicPlayerController();
 		
 		filePathField = new JTextField(20);
 		playBtt = new JButton("Play");
@@ -51,19 +53,19 @@ public class MusicPlayer extends JPanel implements ActionListener {
 		
 		if (source == playBtt)
 		{
-			playerState = musicPlayerService.play(filePathField.getText());
+			playerState = musicPlayerController.play(filePathField.getText());
 		}
 		else if (source == pauseBtt)
 		{	
-			playerState = musicPlayerService.pause();
+			playerState = musicPlayerController.pause();
 		}
 		else if (source == chooseBtt)
 		{
-			filePathField.setText(musicPlayerService.chooseFile(this));
+			filePathField.setText(musicPlayerController.chooseFile(this));
 		}
 		else if (source == loopBtt)
 		{
-			musicPlayerService.loop();
+			musicPlayerController.loop();
 			
 			// Switching text between 'Loop' and 'UnLoop'
 			if (loopBtt.getText().compareTo("Loop") == 0) {
@@ -81,7 +83,7 @@ public class MusicPlayer extends JPanel implements ActionListener {
 	public void setSong(String path) {
 		filePathField.setText(path);
 		
-		MusicPlayerState playerState = musicPlayerService.play(filePathField.getText());
+		MusicPlayerState playerState = musicPlayerController.play(filePathField.getText());
 		changeBttText(playerState);
 	}
 	
