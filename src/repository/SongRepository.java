@@ -90,6 +90,9 @@ public class SongRepository implements IRepository<Song> {
 		
 	}
 	
-	
+	public void delete(int userId, int songId) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

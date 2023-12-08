@@ -48,5 +48,13 @@ public class ContentController {
 	public void addUserSong(int userId, String filepath) {
 		service.addUserSong(userId, filepath);
 	}
+	
+	public void deleteUserSong(int userId, Song song) {
+		service.deleteUserSong(userId, song.getId());
+	}
+	
+	public void deletePlaylistSong(Playlist playlist, Song song) {
+		service.deleteUserSong(playlist.getId(), song.getId());
+	}
 
 }

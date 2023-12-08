@@ -42,6 +42,10 @@ public class Playlist
 		return songs.get(ind);
 	}
 	
+	public void removeSong(Song song) {
+		songs.remove(song);
+	}
+	
 	public ArrayList<Song> getSongs() {
 		return songs;
 	}

@@ -8,10 +8,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingUtilities;
 
 import control.ContentController;
 import entity.Playlist;
 import entity.Song;
+import util.IAlterableItem;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -26,22 +28,26 @@ public class SongList extends JPanel {
 	private ContentController contentController;
 	private MusicPlayer musicPlayer;
 	private JLabel title;
+	private boolean playlistSongList = false;
 	
-	public class SongItem extends JLabel implements MouseListener {
+	public class SongItem extends JLabel implements MouseListener, IAlterableItem {
 		
 		private static final long serialVersionUID = 1L;
 		
 		private Song song = null;
+		private SongList panel;
 		
-		public SongItem(String text) {
+		public SongItem(SongList panel, String text) {
 			super("<html><b><span style=\"color:#000000;font-size:9.5px;\">" + text + "</b></html>");
 			addMouseListener(this);
+			this.panel = panel;
 		}
 		
-		public SongItem(Song song) {
+		public SongItem(SongList panel, Song song) {
 			super("<html><b><span style=\"color:#000000;font-size:9.5px;\">" + song.getName() + "</b></html>");
 			addMouseListener(this);
 			this.song = song;
+			this.panel = panel;
 		}
 		
 		public Song getSong() {
@@ -49,11 +55,42 @@ public class SongList extends JPanel {
 		}
 		
 		@Override
+		public void fromWindowAlterName(String newName) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void fromWindowDelete() {
+			if (playlistSongList) {
+				
+				Playlist p = frame.playlistList.getCurrentPlaylist();
+				
+				if (p != null) {
+					contentController.deletePlaylistSong(p, song);
+					p.removeSong(song);
+					panel.updateCurrentPlaylist(p);
+				}
+			}
+			else {
+				contentController.deleteUserSong(frame.userId, song);
+				panel.updateFiles();
+			}
+		}
+		
+		@Override
 	    public void mouseClicked(MouseEvent e) {
-			File selectedFile = new File(song.getFilepath());
-			musicPlayer.setSong(selectedFile.getAbsolutePath());
-			frame.currentSong = song;
-			frame.currentSongComponent.update();
+			
+			if (SwingUtilities.isLeftMouseButton(e))
+			{
+				File selectedFile = new File(song.getFilepath());
+				musicPlayer.setSong(selectedFile.getAbsolutePath());
+				frame.currentSong = song;
+				frame.currentSongComponent.update();
+			}
+			else {
+				new AlterItemWindow(this, song.getName());
+			}
 	    }
 	    @Override
 	    public void mousePressed(MouseEvent e) {
@@ -69,6 +106,7 @@ public class SongList extends JPanel {
 	    public void mouseExited(MouseEvent e) {
 	    	setText("<html><b><span style=\"color:#000000;font-size:9.5px;\">" + song.getName() + "</b></html>");
 	    }
+
 	}
 	
 	public JScrollPane getScroll() {
@@ -110,6 +148,10 @@ public class SongList extends JPanel {
 		this.frame = frame;
 		
 		this.musicPlayer = frame.musicPlayer;
+		
+		this.playlistSongList = playlistSongList;
+		
+		contentController = new ContentController();
 	}
 	
 	public ArrayList<SongItem> toSongItem(ArrayList<Song> list) {
@@ -117,7 +159,7 @@ public class SongList extends JPanel {
 		ArrayList<SongItem> newList = new ArrayList<SongItem>();
 		
 		for (Song song : list) {
-			newList.add(new SongItem(song));
+			newList.add(new SongItem(this, song));
 		}
 		
 		return newList;
@@ -163,7 +205,6 @@ public class SongList extends JPanel {
 		
 	}
 
-	
 	private void clearPanelList() {
 		for (Component p : getComponents()) {
 			if (p instanceof SongItem) {

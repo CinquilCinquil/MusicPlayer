@@ -18,6 +18,7 @@ public class ContentService {
 	public ContentService() {
 		playlistRepository = new PlaylistRepository();
 		userRepository = new UserRepository();
+		songRepository = new SongRepository();
 	}
 	
 	public void addPlaylist(int userId) {
@@ -70,5 +71,13 @@ public class ContentService {
 
 	public void addUserSong(int userId, String filepath) {
 		songRepository.addUserSong(userId, filepath);
+	}
+
+	public void deleteUserSong(int userId, int songId) {
+		songRepository.delete(userId, songId);
+	}
+
+	public void deletePlaylistSong(int playlistId, int songId) {
+		playlistRepository.deleteSong(playlistId, songId);
 	}
 }
