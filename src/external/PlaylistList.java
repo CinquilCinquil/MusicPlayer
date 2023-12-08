@@ -60,6 +60,10 @@ public class PlaylistList extends JPanel {
 		
 		public void fromWindowDelete() {
 			contentController.deletePlaylist(playlist);
+			if (playlistList.size() > 0) {
+				currentPlaylist = playlistList.get(0).getPlaylist();
+			} else {currentPlaylist = null;}
+			songList.updateCurrentPlaylist(currentPlaylist);
 			panel.update();
 		}
 		

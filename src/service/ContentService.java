@@ -34,6 +34,7 @@ public class ContentService {
 	}
 	
 	public void deletePlaylist(int playlistId) {
+		playlistRepository.deleteSongs(playlistId);
 		playlistRepository.delete(playlistId);
 	}
 	

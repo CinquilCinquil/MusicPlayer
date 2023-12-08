@@ -144,7 +144,7 @@ public class PlaylistRepository implements IRepository<Playlist> {
 	}
 
 	public void deleteSong(int playlistId, int songId) {
-		String query = "DELETE FROM playlist_song WHERE id = ? AND song_id = ?";
+		String query = "DELETE FROM playlist_song WHERE playlist_id = ? AND song_id = ?";
 
         try (
             Connection connection = Database.getConnection();
@@ -152,6 +152,21 @@ public class PlaylistRepository implements IRepository<Playlist> {
         ){
             statement.setInt(1, playlistId);
             statement.setInt(2, songId);
+            statement.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	public void deleteSongs(int playlistId) {
+		String query = "DELETE FROM playlist_song WHERE playlist_id = ?";
+
+        try (
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)
+        ){
+            statement.setInt(1, playlistId);
             statement.executeUpdate();
         }
         catch (SQLException e) {

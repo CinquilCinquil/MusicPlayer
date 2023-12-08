@@ -141,7 +141,7 @@ public class SongList extends JPanel {
 		setBackground(new Color(219, 81, 101));
 		setLayout( new BoxLayout(this, BoxLayout.PAGE_AXIS) );
 
-		title = new JLabel("<html><b><span style=\"color:#000000;font-size:14px;\">" + "-" + "</b></html>");
+		title = new JLabel("<html><b><span style=\"color:#000000;font-size:14px;\">" + "Noone" + "</b></html>");
 		
 		add(title);
 		
@@ -183,6 +183,10 @@ public class SongList extends JPanel {
 				add(song);
 			}	
 		
+		}
+		else {
+			title.setText("<html><b><span style=\"color:#000000;font-size:14px;\">" + 
+					"Noone" + "</b></html>");
 		}
 		
 		revalidate();
