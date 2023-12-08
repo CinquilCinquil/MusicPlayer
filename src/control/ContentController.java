@@ -49,12 +49,12 @@ public class ContentController {
 		service.addUserSong(userId, filepath);
 	}
 	
-	public void deleteUserSong(int userId, Song song) {
-		service.deleteUserSong(userId, song.getId());
+	public void deleteUserSong(Song song) {
+		service.deleteUserSong(song.getId());
 	}
 	
 	public void deletePlaylistSong(Playlist playlist, Song song) {
-		service.deleteUserSong(playlist.getId(), song.getId());
+		service.deletePlaylistSong(playlist.getId(), song.getId());
 	}
 
 }

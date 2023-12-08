@@ -86,13 +86,18 @@ public class SongRepository implements IRepository<Song> {
 	}
 
 	public void delete(int id) {
-		// TODO Auto-generated method stub
-		
+		String query = "DELETE FROM songs WHERE id = ?";
+
+        try (
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)
+        ){
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
 	}
 	
-	public void delete(int userId, int songId) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

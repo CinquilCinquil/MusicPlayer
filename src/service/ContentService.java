@@ -73,8 +73,8 @@ public class ContentService {
 		songRepository.addUserSong(userId, filepath);
 	}
 
-	public void deleteUserSong(int userId, int songId) {
-		songRepository.delete(userId, songId);
+	public void deleteUserSong(int songId) {
+		songRepository.delete(songId);
 	}
 
 	public void deletePlaylistSong(int playlistId, int songId) {

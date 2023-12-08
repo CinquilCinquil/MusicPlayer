@@ -73,7 +73,7 @@ public class SongList extends JPanel {
 				}
 			}
 			else {
-				contentController.deleteUserSong(frame.userId, song);
+				contentController.deleteUserSong(song);
 				panel.updateFiles();
 			}
 		}
