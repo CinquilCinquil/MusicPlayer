@@ -8,10 +8,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+
+import control.ContentController;
 import entity.Playlist;
 import entity.Song;
-import external.PlaylistList.PlaylistItem;
-import repository.UserRepository;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -23,10 +23,9 @@ public class SongList extends JPanel {
 	
 	private PlayerWindow frame;
 	private ArrayList<SongItem> songList;
-	private UserRepository userRepository;
+	private ContentController contentController;
 	private MusicPlayer musicPlayer;
 	private JLabel title;
-	private int userId;
 	
 	public class SongItem extends JLabel implements MouseListener {
 		
@@ -91,11 +90,9 @@ public class SongList extends JPanel {
 		
 		this.frame = frame;
 		
-		this.userId = frame.userId;
-		
 		this.musicPlayer = frame.musicPlayer;
 		
-		userRepository = new UserRepository();
+		contentController = new ContentController();
 		
 		updateFiles();
 		
@@ -126,6 +123,7 @@ public class SongList extends JPanel {
 		return newList;
 	}
 	
+	// An update for the Playlist song list
 	public void updateCurrentPlaylist(Playlist p) {
 		
 		repaint();
@@ -133,9 +131,7 @@ public class SongList extends JPanel {
 		clearPanelList();
 		
 		if (p != null) {
-		
-			
-			
+
 			title.setText("<html><b><span style=\"color:#000000;font-size:14px;\">" + 
 					p.getName() + "</b></html>");
 			
@@ -147,64 +143,26 @@ public class SongList extends JPanel {
 		
 		}
 		
-		/*
-		for (Component c : getComponents())
-		{
-			System.out.println("a");
-		}
-		System.out.println("-");
-		*/
-		
 		revalidate();
 	}
 	
+	// An update for the User song list
 	public void updateFiles() {
 		
 		repaint();
 		
 		clearPanelList();
 		
-		// Adding user songs
-		
-		songList = toSongItem(userRepository.getUserSongs(userId));
+		songList = toSongItem(contentController.updateUserSongs(frame.userId));
 		
 		for (SongItem song : songList) {
 			add(song);
 		}
 		
-		// Adding songs in directories
-		ArrayList<String> dirs = userRepository.getUserDirectories(userId);
-		
-		for (String dir : dirs) {
-			
-			File currentDir = new File(dir);
-			
-			for (File file : currentDir.listFiles()) {
-				
-				if (getExtension(file).compareTo("wav") == 0) {
-					add(new SongItem(
-							new Song(userId, file.getName(), "?", file.getPath())
-					));
-				}
-			}
-			
-		}
-		
 		revalidate();
 		
 	}
-	
-	private String getExtension(File file) {
-		String fileName = file.toString();
 
-	    int index = fileName.lastIndexOf('.');
-	    if(index > 0) {
-	      String extension = fileName.substring(index + 1);
-	      return extension;
-	    }
-	    
-	    return null;
-	}
 	
 	private void clearPanelList() {
 		for (Component p : getComponents()) {

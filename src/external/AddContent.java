@@ -5,52 +5,42 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-
-import repository.SongRepository;
-import repository.UserRepository;
+import control.ContentController;
 
 public class AddContent extends JButton implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	
 	private JFileChooser fileChooser;
-	private int userId;
-	private UserRepository userRepository;
-	private SongRepository songRepository;
-	private boolean addDir;
+	private ContentController contentController;
 	private SongList songList;
+	private PlayerWindow frame;
+	private boolean addDir;
 	
 	public AddContent(PlayerWindow frame, SongList songList, boolean addDir) {
 		setText(addDir ? "Add Dir" : "Add Song");
 
 		addActionListener(this);
 		
-		this.addDir = addDir;
-		
-		this.userId = frame.userId;
+		this.frame = frame;
 		
 		this.songList = songList;
 		
-		userRepository = new UserRepository();
-		songRepository = new SongRepository();
+		this.addDir = addDir;
+		
+		contentController = new ContentController();
 		fileChooser = new JFileChooser();
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		if (e.getSource() == this)
-		{
-			songList.updateFiles();
-			if (addDir) {
-				chooseDir();
-			}
-			else {
-				chooseFile();
-			}
+		if (addDir) {
+			chooseDir();
 		}
-		
+		else {
+			chooseFile();
+		}
+		songList.updateFiles();
 	}
 	
 	private void chooseDir()
@@ -82,11 +72,11 @@ public class AddContent extends JButton implements ActionListener {
 	}
 	
 	private void addDir(String filepath) {
-		userRepository.addUserDir(userId, filepath);
+		contentController.addUserDir(frame.userId, filepath);
 	}
 	
 	private void addFile(String filepath) {
-		songRepository.addUserSong(userId, filepath);
+		contentController.addUserSong(frame.userId, filepath);
 	}
 
 	public void setSongList(SongList songList) {

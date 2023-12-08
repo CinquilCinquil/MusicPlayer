@@ -64,7 +64,7 @@ public class SongRepository implements IRepository<Song> {
 	
 	public void addUserSong(int userId, String dir) {
     	
-    	String query = "INSERT INTO songs (user_id, name, filepath) VALUES (?, ?, ?)";
+    	String query = "INSERT INTO songs (user_id, name, path) VALUES (?, ?, ?)";
 
         try (
             Connection connection = Database.getConnection();
