@@ -13,7 +13,7 @@ import util.Database;
 
 public class PlaylistRepository implements IRepository<Playlist> {
 	
-	 public ArrayList<Song> playlistGetSongs(int playlistId) {
+	public ArrayList<Song> playlistGetSongs(int playlistId) {
 	    	
     	String query = "SELECT * FROM playlist_song WHERE playlist_id = ?";
 
@@ -141,6 +141,47 @@ public class PlaylistRepository implements IRepository<Playlist> {
         catch (SQLException e) {
             e.printStackTrace();
         }
+	}
+	
+	public void addSong(int playlistId, int songId) {
+		
+		if (!isInPlaylist(playlistId, songId)) {
+			
+			String query = "INSERT INTO playlist_song (playlist_id, song_id) VALUES (?, ?)";
+	
+	        try (
+	            Connection connection = Database.getConnection();
+	            PreparedStatement statement = connection.prepareStatement(query)
+	        ){
+	            statement.setInt(1, playlistId);
+	            statement.setInt(2, songId);
+	            statement.executeUpdate();
+	        } 
+	        catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+		}
+	}
+	
+	public boolean isInPlaylist(int playlistId, int songId) {
+		
+		String query = "SELECT id FROM playlist_song WHERE playlist_id = ? AND song_id = ?";
+
+        try (
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)
+        ){
+        	statement.setInt(1, playlistId);
+        	statement.setInt(2, songId);
+        	ResultSet resultSet = statement.executeQuery();
+        	
+            return resultSet.next();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+		
+		return false;
 	}
 	
 }

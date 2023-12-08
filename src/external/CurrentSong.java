@@ -18,7 +18,7 @@ public class CurrentSong extends JLabel {
 	}
 	
 	public void update() {
-		setText("🎵 " + frame.currentSongName + ";");
+		setText("🎵 " + frame.currentSong.getName() + ";");
 	}
 	
 }

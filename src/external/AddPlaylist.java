@@ -10,7 +10,7 @@ import control.ContentController;
 public class AddPlaylist extends JButton implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	private ContentController addContentController;
+	private ContentController contentController;
 	private PlayerWindow frame;
 	private PlaylistList playlistList;
 	
@@ -22,14 +22,13 @@ public class AddPlaylist extends JButton implements ActionListener {
 		
 		this.playlistList = playlistList;
 		
-		this.addContentController = new ContentController();
+		this.contentController = new ContentController();
 		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		addContentController.addPlaylist(frame.userId);
-		System.out.println("amwgwa");
+		contentController.addPlaylist(frame.userId);
 		playlistList.update();
 	}
 

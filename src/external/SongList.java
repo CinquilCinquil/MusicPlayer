@@ -53,8 +53,8 @@ public class SongList extends JPanel {
 	    public void mouseClicked(MouseEvent e) {
 			File selectedFile = new File(song.getFilepath());
 			musicPlayer.setSong(selectedFile.getAbsolutePath());
-			frame.currentSongName = song.getName();
-			frame.currentSong.update();
+			frame.currentSong = song;
+			frame.currentSongComponent.update();
 	    }
 	    @Override
 	    public void mousePressed(MouseEvent e) {

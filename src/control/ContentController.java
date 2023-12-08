@@ -3,6 +3,7 @@ package control;
 import java.util.ArrayList;
 
 import entity.Playlist;
+import entity.Song;
 import service.ContentService;
 
 public class ContentController {
@@ -27,6 +28,10 @@ public class ContentController {
 	
 	public void deletePlaylist(Playlist playlist) {
 		service.deletePlaylist(playlist.getId());
+	}
+	
+	public void addSongToPlaylist(int playlistId, Song song) {
+		service.addSongToPlaylist(playlistId, song);
 	}
 
 }

@@ -3,6 +3,7 @@ package service;
 import java.util.ArrayList;
 
 import entity.Playlist;
+import entity.Song;
 import repository.PlaylistRepository;
 import repository.UserRepository;
 
@@ -30,6 +31,10 @@ public class ContentService {
 	
 	public void deletePlaylist(int playlistId) {
 		playlistRepository.delete(playlistId);
+	}
+	
+	public void addSongToPlaylist(int playlistId, Song song) {
+		playlistRepository.addSong(playlistId, song.getId());
 	}
 
 }

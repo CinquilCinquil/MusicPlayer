@@ -159,4 +159,8 @@ public class PlaylistList extends JPanel {
 	public Playlist getCurrentPlaylist() {
 		return currentPlaylist;
 	}
+	
+	public SongList getSongList() {
+		return songList;
+	}
 }

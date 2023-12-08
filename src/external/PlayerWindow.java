@@ -1,10 +1,8 @@
 package external;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-
-import repository.UserRepository;
+import entity.Song;
 
 public class PlayerWindow extends JFrame {
 
@@ -12,18 +10,19 @@ public class PlayerWindow extends JFrame {
 	
 	protected boolean isVip;
 	protected int userId;
-	protected String currentSongName;
+	protected Song currentSong;
 	
 	// Components of the screen
 	protected MusicPlayer musicPlayer;
 	protected UserInfo userInfo;
 	protected AddContent addDir;
 	protected AddContent addFile;
-	protected CurrentSong currentSong;
+	protected CurrentSong currentSongComponent;
 	protected SongList songList;
 	protected PlaylistList playlistList;
 	protected SongList playlistSongList;
 	protected AddPlaylist addPlaylist;
+	protected AddSongToPlaylist addSongToPlaylist;
 	protected JPanel baldis;
 	
 	public PlayerWindow(LoginScreen windowToClose, int userId, boolean isVip)
@@ -41,7 +40,7 @@ public class PlayerWindow extends JFrame {
 		// ------- Instantiating components -------
 		
 		musicPlayer = new MusicPlayer(this);
-		currentSong = new CurrentSong(this);
+		currentSongComponent = new CurrentSong(this);
 		userInfo = new UserInfo(this);
 		songList = new SongList(this);
 		addDir = new AddContent(this, songList, true);
@@ -49,6 +48,7 @@ public class PlayerWindow extends JFrame {
 		playlistSongList = new SongList(this, true);
 		playlistList = new PlaylistList(this, playlistSongList);
 		addPlaylist = new AddPlaylist(this, playlistList);
+		addSongToPlaylist = new AddSongToPlaylist(this, playlistList);
 		baldis = new JPanel();
 		
 		// ------- Defining the layout of the components -------
@@ -83,16 +83,16 @@ public class PlayerWindow extends JFrame {
 		// ------- Second row -------
 		
 		c.weightx = 0.33;c.gridx = 0;c.gridy = 1;
-		currentSong.setPreferredSize(new Dimension(w, 25));
-		add(currentSong, c);
+		currentSongComponent.setPreferredSize(new Dimension(w, 25));
+		add(currentSongComponent, c);
 		
 		c.gridx = 1;
-		currentSong.setPreferredSize(new Dimension(w, 25));
+		addPlaylist.setPreferredSize(new Dimension(w, 25));
 		add(addPlaylist, c);
 		
 		c.gridx = 2;
-		currentSong.setPreferredSize(new Dimension(w, 25));
-		add(new JButton("Add playlist"), c);
+		addSongToPlaylist.setPreferredSize(new Dimension(w, 25));
+		add(addSongToPlaylist, c);
 		
 		// ------- Third row -------
 		
