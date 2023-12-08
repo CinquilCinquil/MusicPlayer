@@ -16,7 +16,7 @@ public class AddSongToPlaylist extends JButton implements ActionListener{
 	private ContentController contentController;
 	
 	public AddSongToPlaylist(PlayerWindow frame, PlaylistList playlistList) {
-		super("<html><b><span style=\"color:#000000;font-size:8px;\">Add Song to " + 
+		super("<html><b><span style=\"color:#000000;font-size:7px;\">Add Song to " + 
 				"Playlist" + "</b></html>");
 		
 		this.playlistList = playlistList;
@@ -40,6 +40,5 @@ public class AddSongToPlaylist extends JButton implements ActionListener{
 			playlistList.getSongList().updateCurrentPlaylist(p);
 		}
 	}
-
 
 }
