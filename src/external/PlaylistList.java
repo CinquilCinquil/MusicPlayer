@@ -1,6 +1,7 @@
 package external;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -33,12 +34,12 @@ public class PlaylistList extends JPanel implements ActionListener {
 		private Playlist playlist = null;
 		
 		public PlaylistItem(String text) {
-			super(text);
+			super("<html><b><span style=\"color:#000000;font-size:9.5px;\">" + text + "</b></html>");
 			addMouseListener(this);
 		}
 		
 		public PlaylistItem(Playlist playlist) {
-			super(playlist.getName());
+			super("<html><b><span style=\"color:#000000;font-size:9.5px;\">" + playlist.getName() + "</b></html>");
 			addMouseListener(this);
 			this.playlist = playlist;
 		}
@@ -87,7 +88,7 @@ public class PlaylistList extends JPanel implements ActionListener {
 		
 		userRepository = new UserRepository();
 		
-		updatePlaylistList();
+		update();
 		
 	}
 	
@@ -107,16 +108,29 @@ public class PlaylistList extends JPanel implements ActionListener {
 		return newList;
 	}
 	
-	public void updatePlaylistList() {
+	public void update() {
+		
+		clearPanelList();
+		
 		playlistList = toPlaylistItem(userRepository.getUserPlaylists(frame.userId));
 		
 		for (PlaylistItem playlist : playlistList) {
 			add(playlist);
 		}
+		
+		revalidate();
 	}
 	
 	public Playlist getCurrentPlaylist() {
 		return currentPlaylist;
+	}
+	
+	private void clearPanelList() {
+		for (Component p : getComponents()) {
+			if (p instanceof PlaylistItem) {
+				remove(p);
+			}
+		}
 	}
 	
 }

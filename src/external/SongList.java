@@ -33,12 +33,12 @@ public class SongList extends JPanel {
 		private Song song = null;
 		
 		public SongItem(String text) {
-			super(text);
+			super("<html><b><span style=\"color:#000000;font-size:9.5px;\">" + text + "</b></html>");
 			addMouseListener(this);
 		}
 		
 		public SongItem(Song song) {
-			super(song.getName());
+			super("<html><b><span style=\"color:#000000;font-size:9.5px;\">" + song.getName() + "</b></html>");
 			addMouseListener(this);
 			this.song = song;
 		}
@@ -138,6 +138,8 @@ public class SongList extends JPanel {
 			}	
 		
 		}
+		
+		revalidate();
 	}
 	
 	public void updateFiles() {
@@ -167,6 +169,8 @@ public class SongList extends JPanel {
 			}
 			
 		}
+		
+		revalidate();
 		
 	}
 	

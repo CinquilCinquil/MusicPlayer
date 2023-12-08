@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import entity.Playlist;
 import entity.Song;
+import entity.User;
 import util.Database;
 
 public class PlaylistRepository implements IRepository<Playlist> {
@@ -42,8 +43,30 @@ public class PlaylistRepository implements IRepository<Playlist> {
     }
 
 	public ArrayList<Playlist> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Playlist> playlists = new ArrayList<Playlist>();
+
+        String query = "SELECT id, name FROM playlists";
+
+        try (
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery()
+        ){
+            while (resultSet.next())
+            {
+            	playlists.add(
+                    new Playlist(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name")
+                    )
+                );
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return playlists;
 	}
 
 	public Playlist getOne(int id) {
@@ -51,8 +74,38 @@ public class PlaylistRepository implements IRepository<Playlist> {
 		return null;
 	}
 
+	public void create(int userId, Playlist entity) {
+		
+		String query = "INSERT INTO playlists (user_id, name) VALUES (?, ?)";
+
+        try (
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)
+        ){
+            statement.setInt(1, userId);
+            statement.setString(2, entity.getName());
+            statement.executeUpdate();
+        } 
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+		
+	}
+	
 	public void create(Playlist entity) {
-		// TODO Auto-generated method stub
+		
+		String query = "INSERT INTO playlists (name) VALUES (?)";
+
+        try (
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)
+        ){
+            statement.setString(1, entity.getName());
+            statement.executeUpdate();
+        } 
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
 		
 	}
 

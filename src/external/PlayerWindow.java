@@ -23,6 +23,7 @@ public class PlayerWindow extends JFrame {
 	protected SongList songList;
 	protected PlaylistList playlistList;
 	protected SongList playlistSongList;
+	protected AddPlaylist addPlaylist;
 	protected JPanel baldis;
 	
 	public PlayerWindow(LoginScreen windowToClose, int userId, boolean isVip)
@@ -47,6 +48,7 @@ public class PlayerWindow extends JFrame {
 		addFile = new AddContent(this, songList, false);
 		playlistSongList = new SongList(this, true);
 		playlistList = new PlaylistList(this, playlistSongList);
+		addPlaylist = new AddPlaylist(this, playlistList);
 		baldis = new JPanel();
 		
 		// ------- Defining the layout of the components -------
@@ -86,7 +88,7 @@ public class PlayerWindow extends JFrame {
 		
 		c.gridx = 1;
 		currentSong.setPreferredSize(new Dimension(w, 25));
-		add(new JButton("Add playlist"), c);
+		add(addPlaylist, c);
 		
 		c.gridx = 2;
 		currentSong.setPreferredSize(new Dimension(w, 25));
