@@ -286,4 +286,40 @@ public class UserRepository implements IRepository<User>
             e.printStackTrace();
         }
     }
+
+    public void setPassword(int userId, String password) {
+    	
+    	 String query = "UPDATE users SET password = ? WHERE id = ?";
+
+         try (
+             Connection connection = Database.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)
+         ){
+             
+             statement.setString(1, password);
+             statement.setInt(2, userId);
+             statement.executeUpdate();
+         }
+         catch (SQLException e) {
+             e.printStackTrace();
+         }
+    }
+
+    public void setVip(int userId, boolean isVip) {
+    	
+    	String query = "UPDATE users SET vip = ? WHERE id = ?";
+
+        try (
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)
+        ){
+            
+            statement.setBoolean(1, isVip);
+            statement.setInt(2, userId);
+            statement.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

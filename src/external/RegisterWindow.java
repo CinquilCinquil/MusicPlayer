@@ -12,9 +12,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import control.LoginControl;
-import repository.UserRepository;
 
-public class LoginScreen extends JFrame implements ActionListener {
+public class RegisterWindow extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -22,14 +21,14 @@ public class LoginScreen extends JFrame implements ActionListener {
 	private JTextField userField;
 	private JPasswordField passwordField;
 	private JLabel warningText;
-	private JButton logBtt, registerBtt;
+	private JButton vipBtt, registerBtt;
+	private boolean isVip = false;
 	
-	public LoginScreen()
+	public RegisterWindow()
 	{
 		// Setting up the window
-		super("Login Screen");
-		setSize(450, 300);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		super("Register Window");
+		setSize(300, 200);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		
@@ -39,23 +38,23 @@ public class LoginScreen extends JFrame implements ActionListener {
 		userField = new JTextField(20);
 		passwordField = new JPasswordField(20);
 		warningText = new JLabel("");
-		logBtt = new JButton("Log In");
 		registerBtt = new JButton("Register");
+		vipBtt = new JButton("Vip?");
 		
-		logBtt.addActionListener(this);
 		registerBtt.addActionListener(this);
+		vipBtt.addActionListener(this);
 		
 		// Setting up panel
 		JPanel listPane = new JPanel();
 		listPane.setLayout(new BoxLayout(listPane, BoxLayout.Y_AXIS));
-		listPane.setBorder(BorderFactory.createEmptyBorder(80, 100, 120, 100));
+		listPane.setBorder(BorderFactory.createEmptyBorder(10, 20, 110, 20));
 
 		listPane.add(new JLabel("User"));
 		listPane.add(userField);
 		listPane.add(new JLabel("Password"));
 		listPane.add(passwordField);
-		listPane.add(logBtt);
 		listPane.add(registerBtt);
+		listPane.add(vipBtt);
 		listPane.add(warningText);
 		
 		getContentPane().add(listPane);
@@ -66,33 +65,23 @@ public class LoginScreen extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		if (e.getSource() == logBtt) {
-			logIn();
-		}
 		if (e.getSource() == registerBtt) {
-			register();
+			if (loginControl.addUser(userField.getText(), String.valueOf(passwordField.getPassword()), isVip)) {  
+				dispose(); //closing window
+			}
+			else {
+				setWarning("User already exists!");
+			}
 		}
 		
-	}
-	
-	private void logIn() {
-	
-		String name = userField.getText();
-		
-		switch(loginControl.logIn(name, String.valueOf(passwordField.getPassword()))) {
-			case OK: new PlayerWindow(this, loginControl.getUserId(name), loginControl.isVip(name)); break;
-			case USER: setWarning("Invalid user!"); break;
-			case PASSWORD: setWarning("Invalid password!"); break;
+		if (e.getSource() == vipBtt) {
+			vipBtt.setText(isVip ? "Not Vip" : "Is Vip");
+			isVip = !isVip;
 		}
-	
-	}
-	
-	private void register() {
-		new RegisterWindow();
 	}
 	
 	private void setWarning(String warning) {
 		warningText.setText("<html><b><span style=\"color:#FF0000;\">" + warning + "</b></html>");
 	}
-
+	
 }
