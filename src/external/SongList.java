@@ -1,36 +1,21 @@
 package external;
 
 import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
-import javax.sound.sampled.Clip;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.SpringLayout;
-
 import entity.Playlist;
 import entity.Song;
 import repository.UserRepository;
-
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.nio.file.Files;
 
 public class SongList extends JPanel implements ActionListener {
 	
@@ -44,6 +29,8 @@ public class SongList extends JPanel implements ActionListener {
 	private int userId;
 	
 	public class SongItem extends JLabel implements MouseListener {
+		
+		private static final long serialVersionUID = 1L;
 		
 		private Song song = null;
 		
@@ -65,7 +52,7 @@ public class SongList extends JPanel implements ActionListener {
 		@Override
 	    public void mouseClicked(MouseEvent e) {
 			File selectedFile = new File(song.getFilepath());
-			musicPlayer.setSongPath(selectedFile.getAbsolutePath());
+			musicPlayer.setSong(selectedFile.getAbsolutePath());
 	    }
 	    @Override
 	    public void mousePressed(MouseEvent e) {
@@ -91,7 +78,7 @@ public class SongList extends JPanel implements ActionListener {
 	// Normal song list
 	public SongList(int userId, MusicPlayer musicPlayer) {
 		setBackground(new Color(141, 193, 163));
-		setLayout( new BoxLayout(this, BoxLayout.PAGE_AXIS) );
+		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS) );
 		
 		title = new JLabel("<html><b><span style=\"color:#000000;font-size:14px;\">" + " Song List" + "</b></html>");
 		
@@ -121,7 +108,6 @@ public class SongList extends JPanel implements ActionListener {
 		this.playlistList = playlistList;
 		
 		updateCurrentPlaylist();
-		
 	}
 	
 	@Override

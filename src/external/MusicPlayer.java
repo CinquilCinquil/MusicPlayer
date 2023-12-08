@@ -1,21 +1,12 @@
 package external;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import service.MusicPlayerService;
+import service.MusicPlayerState;
 
 public class MusicPlayer extends JPanel implements ActionListener {
 	
@@ -26,14 +17,11 @@ public class MusicPlayer extends JPanel implements ActionListener {
 	private JButton pauseBtt;
 	private JButton loopBtt;
 	private JButton chooseBtt;
-	private JFileChooser fileChooser;
-	private Clip clip;
-	private boolean isPaused = false;
-	private boolean isLooping = false;
+	private MusicPlayerService musicPlayerService;
 	
 	public MusicPlayer() {
 		
-		//setPreferredSize(new Dimension(600, 100));
+		musicPlayerService = new MusicPlayerService();
 		
 		filePathField = new JTextField(20);
 		playBtt = new JButton("Play");
@@ -51,120 +39,60 @@ public class MusicPlayer extends JPanel implements ActionListener {
 		add(pauseBtt);
 		add(loopBtt);
 		add(chooseBtt);
-		
-		fileChooser = new JFileChooser();
-		fileChooser.setFileFilter(new FileNameExtensionFilter("WAV Files", "wav"));
-		
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		if (e.getSource() == playBtt)
+		Object source = e.getSource();
+		MusicPlayerState playerState = MusicPlayerState.OVER;
+		
+		// Checking buttons
+		
+		if (source == playBtt)
 		{
-			play();
+			playerState = musicPlayerService.play(filePathField.getText());
 		}
-		else if (e.getSource() == pauseBtt)
+		else if (source == pauseBtt)
 		{	
-			pause();
+			playerState = musicPlayerService.pause();
 		}
-		else if (e.getSource() == chooseBtt)
+		else if (source == chooseBtt)
 		{
-			chooseFile();
+			filePathField.setText(musicPlayerService.chooseFile(this));
 		}
-		else if (e.getSource() == loopBtt)
+		else if (source == loopBtt)
 		{
-			loop();
-		}
-		
-	}
-	
-	private void play()
-	{
-		// Pausing existing clip
-		if (clip != null && clip.isRunning()) {
-			clip.stop();
-		}
-		
-		// Trying to create a new clip
-		try {
-			File file = new File(filePathField.getText());
-			AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);
+			musicPlayerService.loop();
 			
-			clip = AudioSystem.getClip();
-			clip.open(audioIn);
-			
-			if (isLooping) {
-				clip.loop(Clip.LOOP_CONTINUOUSLY);
-			}
-			
-			clip.start();
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private void pause()
-	{		
-		if (clip != null)
-		{
-			if (clip.isRunning())
-			{
-				clip.stop();
-				pauseBtt.setText("Resume");
-			}
-			else if (isPaused)
-			{	
-				clip.start();
-				
-				if (isLooping) {
-					clip.loop(Clip.LOOP_CONTINUOUSLY);
-				}
-				
-				pauseBtt.setText("Pause⠀");
+			// Switching text between 'Loop' and 'UnLoop'
+			if (loopBtt.getText().compareTo("Loop") == 0) {
+				loopBtt.setText("UnLoop");
+			} else {
+				loopBtt.setText("Loop");
 			}
 		}
 		
-		isPaused = !isPaused;
-	}
-	
-	private void chooseFile()
-	{
-		fileChooser.setCurrentDirectory(new File(".")); //current directory
-		int result = fileChooser.showOpenDialog(this);
-		
-		if (result == JFileChooser.APPROVE_OPTION)
-		{
-			File selectedFile = fileChooser.getSelectedFile();
-			filePathField.setText(selectedFile.getAbsolutePath());
-		}
+		changeBttText(playerState);
 		
 	}
 	
-	private void loop()
-	{
-		isLooping = !isLooping;
-		
-		if (isLooping)
-		{
-			loopBtt.setText("Unloop");
-			
-			if (clip.isRunning()) {
-				clip.loop(Clip.LOOP_CONTINUOUSLY);
-			}
-		}
-		else {
-			loopBtt.setText("Loop");
-			
-			if (clip.isRunning()) {
-				clip.loop(0); // loop 0 times (only playing it once)
-			}
-		}
-	}
-	
-	public void setSongPath(String path) {
+	// Sets the current song in the player
+	public void setSong(String path) {
 		filePathField.setText(path);
+		
+		MusicPlayerState playerState = musicPlayerService.play(filePathField.getText());
+		changeBttText(playerState);
+	}
+	
+	// Changes the text on the buttons depending on the MusicPlayer state
+	private void changeBttText(MusicPlayerState playerState) {
+		switch(playerState)
+		{
+			case PLAYING: pauseBtt.setText("Pause"); break;
+			case PAUSED: pauseBtt.setText("Resume"); break;
+			case OVER: pauseBtt.setText("Pause"); break;
+		}
 	}
 
 }

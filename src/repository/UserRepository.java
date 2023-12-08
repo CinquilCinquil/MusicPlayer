@@ -4,8 +4,6 @@ import entity.Playlist;
 import entity.Song;
 import entity.User;
 import util.Database;
-
-import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

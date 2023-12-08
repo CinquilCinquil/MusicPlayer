@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -15,13 +14,11 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
 import entity.Playlist;
-import entity.Song;
-import external.SongList.SongItem;
 import repository.UserRepository;
 
 public class PlaylistList extends JPanel implements ActionListener {
 
-private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	
 	private ArrayList<PlaylistItem> playlistList;
 	private UserRepository userRepository;
@@ -29,6 +26,8 @@ private static final long serialVersionUID = 1L;
 	private SongList songList; 
 	
 	public class PlaylistItem extends JLabel implements MouseListener {
+		
+		private static final long serialVersionUID = 1L;
 		
 		private Playlist playlist = null;
 		
@@ -51,7 +50,6 @@ private static final long serialVersionUID = 1L;
 	    public void mouseClicked(MouseEvent e) {
 			currentPlaylist = playlist;
 			songList.updateCurrentPlaylist();
-			System.out.println("??A?A?A?");
 	    }
 	    @Override
 	    public void mousePressed(MouseEvent e) {
