@@ -209,6 +209,7 @@ public class SongList extends JPanel {
 		
 	}
 
+	// Removes all componets from the JPanel
 	private void clearPanelList() {
 		for (Component p : getComponents()) {
 			if (p instanceof SongItem) {

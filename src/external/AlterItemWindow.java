@@ -19,8 +19,7 @@ public class AlterItemWindow extends JFrame implements ActionListener {
 	
 	public AlterItemWindow(IAlterableItem comp, String previousName) {
 		super("Edit " + previousName);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setResizable(true);
+		setResizable(false);
 		setSize(300, 100);
 		setLocationRelativeTo(null);
 		setVisible(true);
