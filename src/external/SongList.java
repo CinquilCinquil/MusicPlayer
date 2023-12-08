@@ -74,6 +74,7 @@ public class SongList extends JPanel {
 		
 		JScrollPane j = new JScrollPane(this);
 		j.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		j.setBackground(frame.getBackground());
 		return j;
 	}
 	
@@ -106,6 +107,8 @@ public class SongList extends JPanel {
 		title = new JLabel("<html><b><span style=\"color:#000000;font-size:14px;\">" + "-" + "</b></html>");
 		
 		add(title);
+		
+		this.frame = frame;
 		
 		this.musicPlayer = frame.musicPlayer;
 	}

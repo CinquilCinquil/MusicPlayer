@@ -31,13 +31,15 @@ public class PlayerWindow extends JFrame {
 		dispatchEvent(new WindowEvent(windowToClose, WindowEvent.WINDOW_CLOSING));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(true);
+		getContentPane().setBackground(Color.decode("#59C17F"));
 		setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
 		
 		this.isVip = isVip;
 		this.userId = userId;
 		
-		musicPlayer = new MusicPlayer();
+		// ------- Instantiating components -------
+		
+		musicPlayer = new MusicPlayer(this);
 		currentSong = new CurrentSong(this);
 		userInfo = new UserInfo(this);
 		songList = new SongList(this);
@@ -47,36 +49,48 @@ public class PlayerWindow extends JFrame {
 		playlistList = new PlaylistList(this, playlistSongList);
 		baldis = new JPanel();
 		
+		// ------- Defining the layout of the components -------
+		
+		GridBagConstraints c = new GridBagConstraints();
+		
 		int w = 120;
 		int h = 300;
 		
 		// ------- First row -------
 		
-		// Music Player
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = 0.94;c.weighty = 0.03;c.gridx = 4;c.gridy = 0;
-		add(musicPlayer, c);
-		
 		// UserName
-		c.gridx = 0;c.gridy = 0;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;c.gridy = 0;c.weightx = 0.02;c.weighty = 0.03;
 		userInfo.setPreferredSize(new Dimension(w, 50));
 		add(userInfo, c);
 		
 		// Add Directory
-		c.weightx = 0.02;c.gridx = 1;c.gridy = 0;
+		c.gridx = 1;
 		addDir.setPreferredSize(new Dimension(w, 25));
 		add(addDir, c);
 
 		// Add File
-		c.gridx = 2;c.gridy = 0;
+		c.gridx = 2;
 		addFile.setPreferredSize(new Dimension(w, 25));
 		add(addFile, c);
 		
+		// Music Player
+		c.weightx = 0.94;c.gridx = 4;
+		add(musicPlayer, c);
+		
 		// ------- Second row -------
 		
-		c.weightx = 1;c.gridx = 0;c.gridy = 1;
+		c.weightx = 0.33;c.gridx = 0;c.gridy = 1;
 		currentSong.setPreferredSize(new Dimension(w, 25));
 		add(currentSong, c);
+		
+		c.gridx = 1;
+		currentSong.setPreferredSize(new Dimension(w, 25));
+		add(new JButton("Add playlist"), c);
+		
+		c.gridx = 2;
+		currentSong.setPreferredSize(new Dimension(w, 25));
+		add(new JButton("Add playlist"), c);
 		
 		// ------- Third row -------
 		
@@ -94,13 +108,13 @@ public class PlayerWindow extends JFrame {
 		if (isVip) {
 			
 			// Playlist
-			c.gridx = 1;c.gridy = 2;
+			c.gridx = 1;
 			p = playlistList.getScroll();
 			p.setPreferredSize(new Dimension(0,h));
 			add(p, c);
 			
 			// PlaylistSongList
-			c.gridx = 2;c.gridy = 2;
+			c.gridx = 2;
 			p = playlistSongList.getScroll();
 			p.setPreferredSize(new Dimension(0,h));
 			add(p, c);
@@ -111,17 +125,18 @@ public class PlayerWindow extends JFrame {
 		}
 		
 		// Baldis gif
-		c.gridx = 4;c.gridy = 2;
+		c.gridx = 4;
 		baldis.add(new JLabel(
 				new ImageIcon((new ImageIcon("src/data/baldis.gif").getImage().getScaledInstance((int) (0.8 * h), h, Image.SCALE_DEFAULT))
 		)));
+		baldis.setBackground(getContentPane().getBackground());
 		add(baldis, c);
 		
 		// ------- Fourth row -------
 		
 		// Bottom text
 		c.weighty = 0.5;c.gridwidth = 3;c.gridx = 0;c.gridy = 3;       
-		add(new JLabel("made by: awesome people"), c);
+		add(new JLabel(" made by: awesome people"), c);
 		
 		setSize(1000, 500);
 		setLocationRelativeTo(null);

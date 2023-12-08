@@ -22,7 +22,7 @@ public class AddContent extends JButton implements ActionListener {
 	private SongList songList;
 	
 	public AddContent(PlayerWindow frame, SongList songList, boolean addDir) {
-		setText(addDir ? "Add Dir" : "Add File");
+		setText(addDir ? "Add Dir" : "Add Song");
 
 		addActionListener(this);
 		

@@ -1,5 +1,6 @@
 package external;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -20,7 +21,9 @@ public class MusicPlayer extends JPanel implements ActionListener {
 	private JButton chooseBtt;
 	private MusicPlayerController musicPlayerController;
 	
-	public MusicPlayer() {
+	public MusicPlayer(PlayerWindow frame) {
+		
+		setBackground(frame.getContentPane().getBackground());
 		
 		musicPlayerController = new MusicPlayerController();
 		

@@ -10,15 +10,15 @@ public class CurrentSong extends JLabel {
 
 	public CurrentSong(PlayerWindow frame) {
 		this.frame = frame;
-		setText("Current Song: ");
+		setText("🎵: ");
 	}
 	
 	public void setSong(String name) {
-		setText("Current Song: " + name + ";");
+		setText("🎵: " + name + ";");
 	}
 	
 	public void update() {
-		setText("Current Song: " + frame.currentSongName + ";");
+		setText("🎵 " + frame.currentSongName + ";");
 	}
 	
 }

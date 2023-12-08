@@ -1,6 +1,5 @@
 package external;
 
-import java.awt.Color;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -11,7 +10,7 @@ public class UserInfo extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	public UserInfo(PlayerWindow frame) {
-		//setBackground(new Color(200, 200, 200));
+		setBackground(frame.getContentPane().getBackground());
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS) );
 		
 		add(new JLabel(" User: " + (new UserRepository()).getOne(frame.userId).getName()));
