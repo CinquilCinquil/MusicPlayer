@@ -24,5 +24,9 @@ public class ContentController {
 	public void updatePlaylist(Playlist playlist) {
 		service.updatePlaylist(playlist);
 	}
+	
+	public void deletePlaylist(Playlist playlist) {
+		service.deletePlaylist(playlist.getId());
+	}
 
 }

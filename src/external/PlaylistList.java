@@ -13,7 +13,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import control.ContentController;
 import entity.Playlist;
-import util.IAlterableName;
+import util.IAlterableItem;
 
 public class PlaylistList extends JPanel {
 
@@ -25,20 +25,23 @@ public class PlaylistList extends JPanel {
 	private Playlist currentPlaylist;
 	private SongList songList;
 	
-	public class PlaylistItem extends JLabel implements MouseListener, IAlterableName {
+	public class PlaylistItem extends JLabel implements MouseListener, IAlterableItem {
 		
 		private static final long serialVersionUID = 1L;
 		
 		private Playlist playlist = null;
+		private PlaylistList panel;
 		
-		public PlaylistItem(String text) {
+		public PlaylistItem(PlaylistList panel, String text) {
 			super("<html><b><span style=\"color:#000000;font-size:9.5px;\">" + text + "</b></html>");
+			this.panel = panel;
 			addMouseListener(this);
 		}
 		
-		public PlaylistItem(Playlist playlist) {
+		public PlaylistItem(PlaylistList panel, Playlist playlist) {
 			addMouseListener(this);
 			this.playlist = playlist;
+			this.panel = panel;
 			updateName();
 		}
 		
@@ -55,6 +58,12 @@ public class PlaylistList extends JPanel {
 			}
 		}
 		
+		public void fromWindowDelete() {
+			contentController.deletePlaylist(playlist);
+			panel.revalidate();
+			panel.update();
+		}
+		
 		public void updateName() {
 			setText("<html><b><span style=\"color:#000000;font-size:9.5px;\">" + playlist.getName() + "</b></html>");
 		}
@@ -68,7 +77,7 @@ public class PlaylistList extends JPanel {
 				songList.updateCurrentPlaylist(currentPlaylist);
 			}
 			else {
-				new AlterNameWindow(this, playlist.getName());
+				new AlterItemWindow(this, playlist.getName());
 			}
 			
 	    }
@@ -116,29 +125,32 @@ public class PlaylistList extends JPanel {
 		ArrayList<PlaylistItem> newList = new ArrayList<PlaylistItem>();
 		
 		for (Playlist playlist : list) {
-			newList.add(new PlaylistItem(playlist));
+			newList.add(new PlaylistItem(this, playlist));
 		}
 		
 		return newList;
 	}
 	
+	// Updates PlaylistList's content (its appearece, the user's playlists, etc ...)
 	public void update() {
 		
 		clearPanelList();
+		
+		repaint();
 		
 		playlistList = toPlaylistItem(contentController.getUserPlaylists(frame.userId));
 		
 		for (PlaylistItem playlist : playlistList) {
 			add(playlist);
+			System.out.println("AA");
 		}
+		
+		System.out.println("--");
 		
 		revalidate();
 	}
-	
-	public Playlist getCurrentPlaylist() {
-		return currentPlaylist;
-	}
-	
+
+	// Removes all PlaylistItems
 	private void clearPanelList() {
 		for (Component p : getComponents()) {
 			if (p instanceof PlaylistItem) {
@@ -146,5 +158,8 @@ public class PlaylistList extends JPanel {
 			}
 		}
 	}
-	
+
+	public Playlist getCurrentPlaylist() {
+		return currentPlaylist;
+	}
 }

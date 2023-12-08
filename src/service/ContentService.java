@@ -27,5 +27,9 @@ public class ContentService {
 	public void updatePlaylist(Playlist playlist) {
 		playlistRepository.update(playlist);
 	}
+	
+	public void deletePlaylist(int playlistId) {
+		playlistRepository.delete(playlistId);
+	}
 
 }

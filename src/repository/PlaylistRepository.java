@@ -128,8 +128,19 @@ public class PlaylistRepository implements IRepository<Playlist> {
 	}
 
 	public void delete(int id) {
-		// TODO Auto-generated method stub
 		
+		String query = "DELETE FROM playlists WHERE id = ?";
+
+        try (
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)
+        ){
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
 	}
 	
 }

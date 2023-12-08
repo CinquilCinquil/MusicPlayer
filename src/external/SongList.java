@@ -128,6 +128,8 @@ public class SongList extends JPanel {
 	
 	public void updateCurrentPlaylist(Playlist p) {
 		
+		repaint();
+		
 		clearPanelList();
 		
 		if (p != null) {
@@ -157,6 +159,8 @@ public class SongList extends JPanel {
 	}
 	
 	public void updateFiles() {
+		
+		repaint();
 		
 		clearPanelList();
 		

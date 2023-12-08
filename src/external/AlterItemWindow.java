@@ -1,27 +1,24 @@
 package external;
 
-import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
-import util.IAlterableName;
+import util.IAlterableItem;
 
-public class AlterNameWindow extends JFrame implements ActionListener {
+public class AlterItemWindow extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	
 	private JTextField text;
-	private JButton doneBtt;
-	private IAlterableName comp;
+	private JButton doneBtt, deleteBtt;
+	private IAlterableItem comp;
 	
-	public AlterNameWindow(IAlterableName comp, String previousName) {
-		super("Alter name");
+	public AlterItemWindow(IAlterableItem comp, String previousName) {
+		super("Edit " + previousName);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(true);
 		setSize(300, 100);
@@ -35,11 +32,14 @@ public class AlterNameWindow extends JFrame implements ActionListener {
 		text.setText(previousName);
 		
 		doneBtt = new JButton("Done");
+		deleteBtt = new JButton("Delete");
 		
 		doneBtt.addActionListener(this);
+		deleteBtt.addActionListener(this);
 		
 		add(text);
 		add(doneBtt);
+		add(deleteBtt);
 	
 	}
 
@@ -48,6 +48,11 @@ public class AlterNameWindow extends JFrame implements ActionListener {
 		
 		if (e.getSource() == doneBtt) {
 			comp.fromWindowAlterName(text.getText());
+			dispose();
+		}
+		
+		if (e.getSource() == deleteBtt) {
+			comp.fromWindowDelete();
 			dispose();
 		}
 		

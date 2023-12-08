@@ -1,7 +1,8 @@
 package util;
 
-public interface IAlterableName {
+public interface IAlterableItem {
 	
 	void fromWindowAlterName(String newName);
+	void fromWindowDelete();
 
 }
