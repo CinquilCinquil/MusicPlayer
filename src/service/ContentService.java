@@ -21,27 +21,20 @@ public class ContentService {
 		songRepository = new SongRepository();
 	}
 	
-	public void addPlaylist(int userId) {
-		playlistRepository.create(userId, new Playlist("new playlist"));
+	//  ----- Songs -----
+
+	public void addUserSong(int userId, String filepath) {
+		songRepository.addUserSong(userId, filepath);
 	}
 	
-	public ArrayList<Playlist> getUserPlaylists(int userId) {
-		return userRepository.getUserPlaylists(userId);
-	}
-	
-	public void updatePlaylist(Playlist playlist) {
-		playlistRepository.update(playlist);
-	}
-	
-	public void deletePlaylist(int playlistId) {
-		playlistRepository.deleteSongs(playlistId);
-		playlistRepository.delete(playlistId);
-	}
-	
-	public void addSongToPlaylist(int playlistId, Song song) {
-		playlistRepository.addSong(playlistId, song.getId());
+	public void updateSong(Song song) {
+		songRepository.update(song);
 	}
 
+	public void deleteUserSong(int songId) {
+		songRepository.delete(songId);
+	}
+	
 	public ArrayList<Song> updateUserSongs(int userId) {
 		
 		// Adding user songs
@@ -65,20 +58,38 @@ public class ContentService {
 		
 		return list;
 	}
-
-	public void addUserDir(int userId, String filepath) {
-		userRepository.addUserDir(userId, filepath);
+	
+	//  ----- Playlists -----
+	
+	public void addPlaylist(int userId) {
+		playlistRepository.create(userId, new Playlist("new playlist"));
 	}
 
-	public void addUserSong(int userId, String filepath) {
-		songRepository.addUserSong(userId, filepath);
+	public void updatePlaylist(Playlist playlist) {
+		playlistRepository.update(playlist);
 	}
-
-	public void deleteUserSong(int songId) {
-		songRepository.delete(songId);
+	
+	public void deletePlaylist(int playlistId) {
+		playlistRepository.deleteSongs(playlistId);
+		playlistRepository.delete(playlistId);
+	}
+	
+	public void addSongToPlaylist(int playlistId, Song song) {
+		playlistRepository.addSong(playlistId, song.getId());
 	}
 
 	public void deletePlaylistSong(int playlistId, int songId) {
 		playlistRepository.deleteSong(playlistId, songId);
 	}
+
+	public ArrayList<Playlist> getUserPlaylists(int userId) {
+		return userRepository.getUserPlaylists(userId);
+	}
+	
+	// ----- Dir -----
+	
+	public void addUserDir(int userId, String filepath) {
+		userRepository.addUserDir(userId, filepath);
+	}
+
 }

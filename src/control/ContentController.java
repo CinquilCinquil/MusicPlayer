@@ -1,13 +1,9 @@
 package control;
 
-import java.io.File;
 import java.util.ArrayList;
-
 import entity.Playlist;
 import entity.Song;
-import external.SongList.SongItem;
 import service.ContentService;
-import util.Util;
 
 public class ContentController {
 	
@@ -17,12 +13,28 @@ public class ContentController {
 		service = new ContentService();
 	}
 	
-	public void addPlaylist(int userId) {
-		service.addPlaylist(userId);
+	//  ----- Songs -----
+	
+	public void addUserSong(int userId, String filepath) {
+		service.addUserSong(userId, filepath);
 	}
 	
-	public ArrayList<Playlist> getUserPlaylists(int userId) {
-		return service.getUserPlaylists(userId);
+	public void updateSong(Song song) {
+		service.updateSong(song);
+	}
+	
+	public void deleteUserSong(Song song) {
+		service.deleteUserSong(song.getId());
+	}
+	
+	public ArrayList<Song> updateUserSongs(int userId) {
+		return service.updateUserSongs(userId);
+	}
+	
+	//  ----- Playlists -----
+	
+	public void addPlaylist(int userId) {
+		service.addPlaylist(userId);
 	}
 	
 	public void updatePlaylist(Playlist playlist) {
@@ -37,24 +49,18 @@ public class ContentController {
 		service.addSongToPlaylist(playlistId, song);
 	}
 	
-	public ArrayList<Song> updateUserSongs(int userId) {
-		return service.updateUserSongs(userId);
+	public void deletePlaylistSong(Playlist playlist, Song song) {
+		service.deletePlaylistSong(playlist.getId(), song.getId());
 	}
+	
+	public ArrayList<Playlist> getUserPlaylists(int userId) {
+		return service.getUserPlaylists(userId);
+	}
+	
+	// ----- Dir -----
 	
 	public void addUserDir(int userId, String filepath) {
 		service.addUserDir(userId, filepath);
-	}
-	
-	public void addUserSong(int userId, String filepath) {
-		service.addUserSong(userId, filepath);
-	}
-	
-	public void deleteUserSong(Song song) {
-		service.deleteUserSong(song.getId());
-	}
-	
-	public void deletePlaylistSong(Playlist playlist, Song song) {
-		service.deletePlaylistSong(playlist.getId(), song.getId());
 	}
 
 }

@@ -54,10 +54,18 @@ public class SongList extends JPanel {
 			return song;
 		}
 		
+		public void updateName() {
+			setText("<html><b><span style=\"color:#000000;font-size:9.5px;\">" + song.getName() + "</b></html>");
+		}
+		
 		@Override
 		public void fromWindowAlterName(String newName) {
-			// TODO Auto-generated method stub
-			
+			if (song != null)
+			{
+				song.setName(newName);
+				updateName();
+				contentController.updateSong(song);
+			}
 		}
 
 		@Override

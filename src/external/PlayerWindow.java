@@ -27,6 +27,8 @@ public class PlayerWindow extends JFrame {
 	
 	public PlayerWindow(LoginScreen windowToClose, int userId, boolean isVip)
 	{
+		// ----- Setting up the window -----
+		
 		super("Music Player");
 		windowToClose.dispose();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -86,13 +88,17 @@ public class PlayerWindow extends JFrame {
 		currentSongComponent.setPreferredSize(new Dimension(w, 25));
 		add(currentSongComponent, c);
 		
-		c.gridx = 1;
-		addPlaylist.setPreferredSize(new Dimension(w, 25));
-		add(addPlaylist, c);
+		if (isVip) {
 		
-		c.gridx = 2;
-		addSongToPlaylist.setPreferredSize(new Dimension(w, 25));
-		add(addSongToPlaylist, c);
+			c.gridx = 1;
+			addPlaylist.setPreferredSize(new Dimension(w, 25));
+			add(addPlaylist, c);
+			
+			c.gridx = 2;
+			addSongToPlaylist.setPreferredSize(new Dimension(w, 25));
+			add(addSongToPlaylist, c);
+		
+		}
 		
 		// ------- Third row -------
 		

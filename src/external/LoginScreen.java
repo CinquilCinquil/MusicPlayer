@@ -26,14 +26,14 @@ public class LoginScreen extends JFrame implements ActionListener {
 	
 	public LoginScreen()
 	{
-		// Setting up the window
+		// ----- Setting up the window -----
 		super("Login Screen");
 		setSize(450, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		
-		// Instantiating variavbles
+		// ----- Instantiating variavbles -----
 		loginControl = new LoginControl(); 
 		
 		userField = new JTextField(20);
@@ -45,7 +45,7 @@ public class LoginScreen extends JFrame implements ActionListener {
 		logBtt.addActionListener(this);
 		registerBtt.addActionListener(this);
 		
-		// Setting up panel
+		// ----- Setting up panel  -----
 		JPanel listPane = new JPanel();
 		listPane.setLayout(new BoxLayout(listPane, BoxLayout.Y_AXIS));
 		listPane.setBorder(BorderFactory.createEmptyBorder(80, 100, 120, 100));

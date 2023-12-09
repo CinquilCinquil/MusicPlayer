@@ -81,8 +81,20 @@ public class SongRepository implements IRepository<Song> {
     }
 
 	public void update(Song entity) {
-		// TODO Auto-generated method stub
-		
+		 String query = "UPDATE songs SET name = ? WHERE id = ?";
+
+        try (
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)
+        ){
+            
+            statement.setString(1, entity.getName());
+            statement.setInt(2, entity.getId());
+            statement.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
 	}
 
 	public void delete(int id) {
