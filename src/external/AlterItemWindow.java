@@ -9,6 +9,9 @@ import javax.swing.JTextField;
 
 import util.IAlterableItem;
 
+// Class responsible for window that appears when the user wants to edit an item on a list.
+// The window allows the user to change the name of the item or to delete it.
+
 public class AlterItemWindow extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;

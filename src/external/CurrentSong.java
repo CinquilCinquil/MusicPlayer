@@ -2,6 +2,8 @@ package external;
 
 import javax.swing.JLabel;
 
+// Class responsible for displaying the song currently playing.
+
 public class CurrentSong extends JLabel {
 	
 	private static final long serialVersionUID = 1L;

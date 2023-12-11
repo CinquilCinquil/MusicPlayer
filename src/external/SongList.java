@@ -19,6 +19,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 
+// Class responsible for the Song list in the window.
+// Allows user to selected and edit songs. 
+
 public class SongList extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
@@ -30,6 +33,7 @@ public class SongList extends JPanel {
 	private JLabel title;
 	private boolean playlistSongList = false;
 	
+	// Class responsible for the items in on the Song list.
 	public class SongItem extends JLabel implements MouseListener, IAlterableItem {
 		
 		private static final long serialVersionUID = 1L;
@@ -58,6 +62,7 @@ public class SongList extends JPanel {
 			setText("<html><b><span style=\"color:#000000;font-size:9.5px;\">" + song.getName() + "</b></html>");
 		}
 		
+		// Altering current item's name
 		@Override
 		public void fromWindowAlterName(String newName) {
 			if (song != null)
@@ -68,6 +73,7 @@ public class SongList extends JPanel {
 			}
 		}
 
+		// Deleting current item
 		@Override
 		public void fromWindowDelete() {
 			if (playlistSongList) {
@@ -108,15 +114,18 @@ public class SongList extends JPanel {
 	    }
 	    @Override
 	    public void mouseEntered(MouseEvent e) {
+	    	// Painting text white
 	    	setText("<html><b><span style=\"color:#FFFFFF;font-size:9.5px;\">" + song.getName() + "</b></html>");
 	    }
 	    @Override
 	    public void mouseExited(MouseEvent e) {
+	    	// Painting text black
 	    	setText("<html><b><span style=\"color:#000000;font-size:9.5px;\">" + song.getName() + "</b></html>");
 	    }
 
 	}
 	
+	// Puts the component in a JScroll
 	public JScrollPane getScroll() {
 		
 		JScrollPane j = new JScrollPane(this);
@@ -162,6 +171,7 @@ public class SongList extends JPanel {
 		contentController = new ContentController();
 	}
 	
+	// Transforms an Arraylist of Songs to an ArrayList of SongItems
 	public ArrayList<SongItem> toSongItem(ArrayList<Song> list) {
 		
 		ArrayList<SongItem> newList = new ArrayList<SongItem>();
@@ -182,6 +192,7 @@ public class SongList extends JPanel {
 		
 		if (p != null) {
 
+			// Setting text to current playlist name
 			title.setText("<html><b><span style=\"color:#000000;font-size:14px;\">" + 
 					p.getName() + "</b></html>");
 			
@@ -193,6 +204,7 @@ public class SongList extends JPanel {
 		
 		}
 		else {
+			// Setting text to "Noone"
 			title.setText("<html><b><span style=\"color:#000000;font-size:14px;\">" + 
 					"Noone" + "</b></html>");
 		}

@@ -4,6 +4,9 @@ import java.awt.*;
 import javax.swing.*;
 import entity.Song;
 
+// Class responsible for the Main Window of the program.
+// Instantiates all of the components in a GridBagLayout.
+
 public class PlayerWindow extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -30,7 +33,7 @@ public class PlayerWindow extends JFrame {
 		// ----- Setting up the window -----
 		
 		super("Music Player");
-		windowToClose.dispose();
+		windowToClose.dispose(); // killing previous window (login window)
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		getContentPane().setBackground(Color.decode("#59C17F"));

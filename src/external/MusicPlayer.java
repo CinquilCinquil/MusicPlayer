@@ -1,6 +1,5 @@
 package external;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -9,6 +8,9 @@ import javax.swing.JTextField;
 
 import control.MusicPlayerController;
 import util.MusicPlayerState;
+
+// Class responsible for music player component of the program.
+// Allows music to be played, paused and looped.
 
 public class MusicPlayer extends JPanel implements ActionListener {
 	

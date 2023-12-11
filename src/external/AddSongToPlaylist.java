@@ -7,6 +7,9 @@ import javax.swing.JButton;
 import control.ContentController;
 import entity.Playlist;
 
+// Class responsible for the Add Song to Playlist button.
+// When pressed, the currently selected song is added to the currently selected playlist.
+
 public class AddSongToPlaylist extends JButton implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
@@ -35,7 +38,7 @@ public class AddSongToPlaylist extends JButton implements ActionListener{
 			// associating song with playlist in repository
 			contentController.addSongToPlaylist(p.getId(), frame.currentSong);
 			
-			// adding song to playlist SongList
+			// adding song to the playlist SongList
 			p.addSong(frame.currentSong);
 			playlistList.getSongList().updateCurrentPlaylist(p);
 		}

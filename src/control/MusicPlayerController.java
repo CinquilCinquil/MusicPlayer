@@ -12,23 +12,19 @@ public class MusicPlayerController {
 		service = new MusicPlayerService();
 	}
 	
-	public MusicPlayerState play(String filepath)
-	{
+	public MusicPlayerState play(String filepath) {
 		return service.play(filepath);
 	}
 	
-	public MusicPlayerState pause()
-	{		
+	public MusicPlayerState pause() {		
 		return service.pause();
 	}
 	
-	public String chooseFile(JPanel panel)
-	{
+	public String chooseFile(JPanel panel) {
 		return service.chooseFile(panel);
 	}
 	
-	public void loop()
-	{
+	public void loop() {
 		service.loop();
 	}
 

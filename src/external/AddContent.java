@@ -7,6 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import control.ContentController;
 
+// Class responsible for the Add Song and Add directory buttons.
+// When pressed, the user can add a file or a directory of files to their song list.
+
 public class AddContent extends JButton implements ActionListener {
 
 	private static final long serialVersionUID = 1L;

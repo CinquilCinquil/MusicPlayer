@@ -15,6 +15,9 @@ import control.ContentController;
 import entity.Playlist;
 import util.IAlterableItem;
 
+// Class responsible for the Playlist list in the window.
+// Allows user to selected and edit playlists. 
+
 public class PlaylistList extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -25,6 +28,7 @@ public class PlaylistList extends JPanel {
 	private Playlist currentPlaylist;
 	private SongList songList;
 	
+	// Class responsible for the items in on the Playlist list.
 	public class PlaylistItem extends JLabel implements MouseListener, IAlterableItem {
 		
 		private static final long serialVersionUID = 1L;
@@ -49,6 +53,7 @@ public class PlaylistList extends JPanel {
 			return playlist;
 		}
 		
+		// Altering current item's name
 		public void fromWindowAlterName(String newName) {
 			if (playlist != null)
 			{
@@ -58,6 +63,7 @@ public class PlaylistList extends JPanel {
 			}
 		}
 		
+		// Deleting current item
 		public void fromWindowDelete() {
 			contentController.deletePlaylist(playlist);
 			if (playlistList.size() > 0) {
@@ -75,11 +81,11 @@ public class PlaylistList extends JPanel {
 	    public void mouseClicked(MouseEvent e) {
 			
 			if (SwingUtilities.isLeftMouseButton(e))
-			{
+			{ // Left click -> select item
 				currentPlaylist = playlist;
 				songList.updateCurrentPlaylist(currentPlaylist);
 			}
-			else {
+			else {  // Right click -> alter item
 				new AlterItemWindow(this, playlist.getName());
 			}
 			
@@ -92,14 +98,17 @@ public class PlaylistList extends JPanel {
 	    }
 	    @Override
 	    public void mouseEntered(MouseEvent e) {
+	    	// Painting text white
 	    	setText("<html><b><span style=\"color:#FFFFFF;font-size:9.5px;\">" + playlist.getName() + "</b></html>");
 	    }
 	    @Override
 	    public void mouseExited(MouseEvent e) {
+	    	// Painting text black
 	    	setText("<html><b><span style=\"color:#000000;font-size:9.5px;\">" + playlist.getName() + "</b></html>");
 	    }
 	}
 	
+	// Puts the component in a JScroll
 	public JScrollPane getScroll() {
 		
 		JScrollPane j = new JScrollPane(this);
@@ -123,6 +132,7 @@ public class PlaylistList extends JPanel {
 		
 	}
 
+	// Transforms an Arraylist of Playlists to an ArrayList of PlaylistItems
 	public ArrayList<PlaylistItem> toPlaylistItem(ArrayList<Playlist> list) {
 		
 		ArrayList<PlaylistItem> newList = new ArrayList<PlaylistItem>();

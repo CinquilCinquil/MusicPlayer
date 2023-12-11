@@ -14,6 +14,8 @@ import javax.swing.JTextField;
 import control.LoginControl;
 import repository.UserRepository;
 
+// Class responsible for the login window.
+
 public class LoginScreen extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;

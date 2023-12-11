@@ -7,6 +7,9 @@ import javax.swing.JButton;
 
 import control.ContentController;
 
+// Class responsible for the Add Playlist button.
+// When pressed, a new playlsit is created.
+
 public class AddPlaylist extends JButton implements ActionListener {
 
 	private static final long serialVersionUID = 1L;

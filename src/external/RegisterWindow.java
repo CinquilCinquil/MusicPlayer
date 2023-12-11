@@ -13,6 +13,8 @@ import javax.swing.JTextField;
 
 import control.LoginControl;
 
+// Class responsible for the user registering window.
+
 public class RegisterWindow extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
