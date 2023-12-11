@@ -8,12 +8,37 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import entity.Song;
+import entity.User;
 import util.Database;
 
 public class SongRepository implements IRepository<Song> {
 
 	public ArrayList<Song> getAll() {
-		// TODO Auto-generated method stub
+		
+		ArrayList<Song> songs = new ArrayList<>();
+		
+		String query = "SELECT * FROM songs";
+
+        try (
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)
+        ){
+            ResultSet resultSet = statement.executeQuery();
+            
+            while (resultSet.next()) {
+            	songs.add(new Song(resultSet.getInt("id"),
+            			resultSet.getString("name"),
+            			resultSet.getString("artist"),
+            			resultSet.getString("path"))
+            	);
+            }
+            
+            return songs;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+		
 		return null;
 	}
 

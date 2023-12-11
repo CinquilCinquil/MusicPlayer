@@ -96,13 +96,13 @@ public class SongList extends JPanel {
 	    public void mouseClicked(MouseEvent e) {
 			
 			if (SwingUtilities.isLeftMouseButton(e))
-			{
+			{ // Left click -> select item
 				File selectedFile = new File(song.getFilepath());
 				musicPlayer.setSong(selectedFile.getAbsolutePath());
 				frame.currentSong = song;
 				frame.currentSongComponent.update();
 			}
-			else {
+			else { // Right click -> alter item
 				new AlterItemWindow(this, song.getName());
 			}
 	    }

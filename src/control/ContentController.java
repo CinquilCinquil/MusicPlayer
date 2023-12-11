@@ -5,6 +5,8 @@ import entity.Playlist;
 import entity.Song;
 import service.ContentService;
 
+// Controller responsible for managing content (user data, songs, playlists) between Front-End and service.
+
 public class ContentController {
 	
 	private ContentService service;

@@ -9,6 +9,8 @@ import repository.SongRepository;
 import repository.UserRepository;
 import util.Util;
 
+// Service responsible for managing content (user data, songs, playlists) between control and repositories.
+
 public class ContentService {
 	
 	private UserRepository userRepository;
