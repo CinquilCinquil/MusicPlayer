@@ -7,15 +7,14 @@ import repository.UserRepository;
 
 public class Playlist
 {
-	int id;
-	String name;
-	ArrayList<Song> songs;
+	private int id;
+	private String name;
+	private ArrayList<Song> songs;
 
 	public Playlist(int id, String name) {
 		this.id = id;
 		this.name = name;
-		
-		updateSongs();
+		this.songs = null;
 	}
 	
 	public Playlist(String name) {
@@ -50,9 +49,8 @@ public class Playlist
 		return songs;
 	}
 	
-	public void updateSongs() {
-		PlaylistRepository playlistRepository = new PlaylistRepository();
-		songs = playlistRepository.playlistGetSongs(id);
+	public void setSongs(ArrayList<Song> songs) {
+		this.songs = songs;
 	}
 	
 }

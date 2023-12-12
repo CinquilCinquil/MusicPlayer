@@ -4,12 +4,14 @@ import java.util.ArrayList;
 
 public class User
 {	
-	int id;
-	String name;
-	ArrayList<Song> songs;
+	private int id;
+	private boolean isVip;
+	private String name;
+	private ArrayList<Song> songs;
 
-	public User(int id, String name) {
+	public User(int id, String name, boolean isVip) {
 		this.id = id;
+		this.isVip = isVip;
 		this.name = name;
 	}
 	
@@ -35,6 +37,14 @@ public class User
 	
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public void setVip(boolean isVip) {
+		this.isVip = isVip;
+	}
+	
+	public boolean getVip() {
+		return isVip;
 	}
 	
 }

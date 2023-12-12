@@ -12,11 +12,17 @@ import java.util.ArrayList;
 
 public class UserRepository implements IRepository<User>
 {
+	private PlaylistRepository playlistRepository;
+	
+	public UserRepository() {
+		playlistRepository = new PlaylistRepository();
+	}
+	
     public ArrayList<User> getAll()
     {
         ArrayList<User> users = new ArrayList<>();
 
-        String query = "SELECT id, name FROM users";
+        String query = "SELECT id, name, vip FROM users";
 
         try (
             Connection connection = Database.getConnection();
@@ -28,7 +34,8 @@ public class UserRepository implements IRepository<User>
                 users.add(
                     new User(
                         resultSet.getInt("id"),
-                        resultSet.getString("name")
+                        resultSet.getString("name"),
+                        resultSet.getBoolean("vip")
                     )
                 );
             }
@@ -42,7 +49,7 @@ public class UserRepository implements IRepository<User>
 
     public User getOne(int id)
     {
-        String query = "SELECT id, name FROM users WHERE id = ?";
+        String query = "SELECT id, name, vip FROM users WHERE id = ?";
 
         try (
             Connection connection = Database.getConnection();
@@ -54,7 +61,8 @@ public class UserRepository implements IRepository<User>
             if (resultSet.next()) {
                 return new User(
                     resultSet.getInt("id"),
-                    resultSet.getString("name")
+                    resultSet.getString("name"),
+                    resultSet.getBoolean("vip")
                 );
             }
         }
@@ -215,7 +223,7 @@ public class UserRepository implements IRepository<User>
     
     public ArrayList<Playlist> getUserPlaylists(int userId) {
     	
-    	String query = "SELECT * FROM playlists WHERE user_id = ?";
+    	String query = "SELECT id FROM playlists WHERE user_id = ?";
 
         try (
             Connection connection = Database.getConnection();
@@ -229,8 +237,7 @@ public class UserRepository implements IRepository<User>
         	while (resultSet.next()) {  
             	
         		songList.add(
-        				new Playlist(resultSet.getInt("id"),
-        						resultSet.getString("name"))
+        			playlistRepository.getOne(resultSet.getInt("id"))
         		);
         	}
         	

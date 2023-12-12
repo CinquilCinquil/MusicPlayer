@@ -54,23 +54,52 @@ public class PlaylistRepository implements IRepository<Playlist> {
         ){
             while (resultSet.next())
             {
-            	playlists.add(
-                    new Playlist(
+            	Playlist playlist = new Playlist(
                         resultSet.getInt("id"),
                         resultSet.getString("name")
-                    )
                 );
+            	
+            	playlist.setSongs(playlistGetSongs(resultSet.getInt("id")));
+            	
+            	playlists.add(playlist);
             }
+            
+            return playlists;
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return playlists;
+        return null;
 	}
 
 	public Playlist getOne(int id) {
-		// TODO Auto-generated method stub
+
+        String query = "SELECT id, name FROM playlists WHERE id = ?";
+
+        try (
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)
+        ){
+        	statement.setInt(1, id);
+        	ResultSet resultSet = statement.executeQuery();
+        	
+            if (resultSet.next())
+            {
+            	Playlist playlist = new Playlist(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name")
+                );
+            	
+            	playlist.setSongs(playlistGetSongs(resultSet.getInt("id")));
+            	
+            	return playlist;
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+		
 		return null;
 	}
 

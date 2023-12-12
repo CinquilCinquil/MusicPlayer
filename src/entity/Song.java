@@ -2,8 +2,8 @@ package entity;
 
 public class Song
 {
-	int id;
-	String name, artist, filepath;
+	private int id;
+	private String name, artist, filepath;
 
 	public Song(int id, String name, String artist, String filepath)
 	{
