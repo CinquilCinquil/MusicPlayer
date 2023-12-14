@@ -60,6 +60,7 @@ public class PlaylistList extends JPanel {
 				playlist.setName(newName);
 				updateName();
 				contentController.updatePlaylist(playlist);
+				songList.updateCurrentPlaylist(currentPlaylist);
 			}
 		}
 		

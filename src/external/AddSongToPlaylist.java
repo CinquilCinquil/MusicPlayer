@@ -35,12 +35,17 @@ public class AddSongToPlaylist extends JButton implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		Playlist p = playlistList.getCurrentPlaylist();
 		if (p != null) {
-			// associating song with playlist in repository
-			contentController.addSongToPlaylist(p.getId(), frame.currentSong);
-			
-			// adding song to the playlist SongList
-			p.addSong(frame.currentSong);
-			playlistList.getSongList().updateCurrentPlaylist(p);
+			if (frame.currentSong != null) {
+				if (!p.hasSong(frame.currentSong.getId()))
+				{
+					// associating song with playlist in repository
+					contentController.addSongToPlaylist(p.getId(), frame.currentSong);
+				
+					// adding song to the playlist SongList
+					p.addSong(frame.currentSong);
+					playlistList.getSongList().updateCurrentPlaylist(p);
+				}
+			}
 		}
 	}
 

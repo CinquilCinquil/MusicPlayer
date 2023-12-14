@@ -147,7 +147,7 @@ public class PlayerWindow extends JFrame {
 		
 		// Bottom text
 		c.weighty = 0.5;c.gridwidth = 3;c.gridx = 0;c.gridy = 3;       
-		add(new JLabel(" made by: awesome people"), c);
+		add(new JLabel(" made by: awesome people (Carlos and Pablo)"), c);
 		
 		setSize(1000, 500);
 		setLocationRelativeTo(null);

@@ -53,4 +53,11 @@ public class Playlist
 		this.songs = songs;
 	}
 	
+	public boolean hasSong(int songId) {
+		for (Song song : songs) {
+			if (song.getId() == songId) return true;
+		}
+		return false;
+	}
+	
 }
